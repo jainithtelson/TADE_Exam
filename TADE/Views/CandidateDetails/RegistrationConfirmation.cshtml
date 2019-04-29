@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "RegistrationConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registration Confirmation</h2>
+	An email has been sent to your email address. <br /><br />You can use the email address and password to log in to your account to modify the exam date or to begin the exam. 
+<br /><br />
+Please read the email carefully to understand about the test and terms and conditions before booking the exam.
+<br /><br /><br /><br />
+
+<input type="button" class="btn btn-primary" value="Book exam" onclick="window.location.href='@Url.Action("CandidateExamBookingDetails", "CandidateDetails")';" />
+

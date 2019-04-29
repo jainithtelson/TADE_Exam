@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "ObjectiveTest";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "TestVideoController";
+}
+
+<!DOCTYPE html>
+<html lang="en" @(ViewBag.ngApp != null ? @Html.Raw(" ng-app=\"" + @ViewBag.ngApp + "\"") : "")>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - The Advanced Drivers Exam</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-cookies.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="~/JS/JS.js"></script>
+    <script type="text/javascript" src="~/JS/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="~/JS/angular-tablesort.js"></script>
+    <script type="text/javascript" src="~/JS/moment.min.js"></script>
+    <script type="text/javascript" src="~/JS/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/JS/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/JS/VideoTest.js"></script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-sanitize.js"></script>*@
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="Stylesheet" href="~/css/style.css">
+    <link rel="Stylesheet" href="~/css/override_style.css">
+    <link rel="Stylesheet" href="~/css/daterangepicker.css">
+    <script type="text/javascript" src="~/Scripts/webcam.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+</head>
+<body @(ViewBag.ngController != null ? @Html.Raw(" ng-controller=\"" + @ViewBag.ngController + "\"") : "") oncontextmenu="return false;">
+
+    <div>
+        <div class="alert alert-error ng-scope" ng-show="webcamError" style="">
+            <span>Webcam could not be started. Did you give access to it?</span>
+        </div>
+        <webcam channel="channel"
+                on-streaming="onSuccess()"
+                on-error="onError(err)"
+                on-stream="onStream(stream)"></webcam>
+        <button ng-click="makeSnapshot()">take picture</button>
+        <canvas id="snapshot" width="300" height="300"></canvas>
+    </div>
+    <script>
+        angular.module('TADEApp', ['webcam'])
+.controller('TestVideoController', function ($scope) {
+    var _video = null,
+        patData = null;
+
+    $scope.patOpts = { x: 0, y: 0, w: 25, h: 25 };
+
+    // Setup a channel to receive a video property
+    // with a reference to the video element
+    // See the HTML binding in main.html
+    $scope.channel = {};
+
+    $scope.webcamError = false;
+    $scope.onError = function (err) {
+        $scope.$apply(
+            function () {
+                $scope.webcamError = err;
+            }
+        );
+    };
+
+    $scope.onSuccess = function () {
+        // The video element contains the captured camera data
+        _video = $scope.channel.video;
+        $scope.$apply(function () {
+            $scope.patOpts.w = _video.width;
+            $scope.patOpts.h = _video.height;
+            //$scope.showDemos = true;
+        });
+    };
+
+    $scope.onStream = function (stream) {
+        // You could do something manually with the stream.
+    };
+
+    $scope.makeSnapshot = function () {
+        if (_video) {
+            var patCanvas = document.querySelector('#snapshot');
+            if (!patCanvas) return;
+
+            patCanvas.width = _video.width;
+            patCanvas.height = _video.height;
+            var ctxPat = patCanvas.getContext('2d');
+
+            var idata = getVideoData($scope.patOpts.x, $scope.patOpts.y, $scope.patOpts.w, $scope.patOpts.h);
+            ctxPat.putImageData(idata, 0, 0);
+
+            sendSnapshotToServer(patCanvas.toDataURL());
+
+            patData = idata;
+        }
+    };
+
+    /**
+     * Redirect the browser to the URL given.
+     * Used to download the image by passing a dataURL string
+     */
+    $scope.downloadSnapshot = function downloadSnapshot(dataURL) {
+        window.location.href = dataURL;
+    };
+
+    var getVideoData = function getVideoData(x, y, w, h) {
+        var hiddenCanvas = document.createElement('canvas');
+        hiddenCanvas.width = _video.width;
+        hiddenCanvas.height = _video.height;
+        var ctx = hiddenCanvas.getContext('2d');
+        ctx.drawImage(_video, 0, 0, _video.width, _video.height);
+        return ctx.getImageData(x, y, w, h);
+    };
+
+    /**
+     * This function could be used to send the image data
+     * to a backend server that expects base64 encoded images.
+     *
+     * In this example, we simply store it in the scope for display.
+     */
+    var sendSnapshotToServer = function sendSnapshotToServer(imgBase64) {
+        $scope.snapshotData = imgBase64;
+    };
+});
+    </script>
+</body>
+</html>

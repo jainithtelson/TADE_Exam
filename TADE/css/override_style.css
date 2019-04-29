@@ -1,0 +1,26 @@
+﻿.control-label
+{
+	font-weight:normal;
+
+}
+
+h1
+{
+	font-size: 19px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)
+{
+	background-color: #dce7f6;
+}
+
+.form-control
+{
+	height:32px;
+	border-radius:3px;
+}
+
+.list-group
+{
+	font-size:9pt;
+}

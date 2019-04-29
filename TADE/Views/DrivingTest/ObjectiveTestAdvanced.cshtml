@@ -1,0 +1,287 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "ObjectiveTest";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "ObjectiveTestController";
+}
+
+<!DOCTYPE html>
+
+<html lang="en" @(ViewBag.ngApp != null ? @Html.Raw(" ng-app=\"" + @ViewBag.ngApp + "\"") : "")>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - The Advanced Drivers Exam</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-cookies.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="~/JS/JS.js"></script>
+    <script type="text/javascript" src="~/JS/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="~/JS/angular-tablesort.js"></script>
+    <script type="text/javascript" src="~/JS/moment.min.js"></script>
+    <script type="text/javascript" src="~/JS/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/JS/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/JS/VideoTest.js"></script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-sanitize.js"></script>*@
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="Stylesheet" href="~/css/style.css">
+    <link rel="Stylesheet" href="~/css/override_style.css">
+    <link rel="Stylesheet" href="~/css/daterangepicker.css">
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+
+</head>
+<body id="ObjectiveTest" @(ViewBag.ngController != null ? @Html.Raw(" ng-controller=\"" + @ViewBag.ngController + "\"") : "") oncontextmenu="return false;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <span class="navbar-brand" style="text-align:center;">TADE - Test Part 1 - Objective</span>
+                @*@Html.ActionLink("The Advanced Drivers Exam", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container body-content">
+        <div id="videoMonitoring">@Html.Partial("_InspectCandidatesByVideo")</div>
+
+        <div ng-show="showExam">
+
+            <div ng-repeat="q in QuestionList  | startFrom:currentPage*pageSize | limitTo:pageSize">
+                <div class="label label-warning col-md-1" style="text-align:left;width:auto !important;">Question {{currentPage + 1}} of {{numberOfPages()}}.</div><div class="col-md-10" style="text-align:right; font-size:17px;" ng-init="QuestionDuration(q.AllowedTime)">Time remaining: &nbsp;<span style="font-size:22px; font-weight:bold;" ng-model="q.TimeTaken" id="countdown"></span>&nbsp;seconds for this question</div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table><tr><td width="5px;" style="vertical-align:top;"><div style="font-size:20px;">{{currentPage +1}}.</div> </td><td><div style="font-size:20px;" ng-bind-html="q.Question"></div></td></tr></table>
+
+                        <div ng-switch on="q.ImageShow">
+                            <div ng-switch-when="true"><img src="~/QuestionImages/{{q.QuestionImage}}" /></div>
+                            <div ng-switch-default></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row text-left options">
+                    <div class="col-md-6" ng-repeat="option in q.AnswerOptions" style="font-size:20px;">
+                        <div class="option">
+                            <label class="" for="{{option.AnswerOptionsID}}" style="font-size:20px;">
+                                <input id="{{option.AnswerOptionsID}}" type="checkbox" ng-model="option.Selected" ng-change="onSelect(q, option);" />
+                                {{option.AnswerOptionsDescription}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @*<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                    Previous
+                </button>*@
+            @*{{currentPage+1}}/{{numberOfPages()}}*@
+            <button class="btn btn-default" id="nextQuestion" ng-hide="currentPage + 1 >= numberOfPages()" ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="NextQuestion()">
+                Next
+            </button>
+            <button class="btn btn-default" ng-click="onSubmit();">Submit Quiz</button>
+        </div>
+        <br />
+        <footer>
+            @*<div class="col-md-12" style="vertical-align:bottom;">
+                    &copy;  @DateTime.Now.Year - TADE
+                </div>*@
+
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        "use strict";
+        var app = angular.module('@ViewBag.ngApp', ['ngSanitize']);
+
+        app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+           function ($scope, $http) {
+               $scope.currentPage = 0;
+               $scope.pageSize = 1;
+               $scope.QuestionList = [];
+               $scope.defaultConfig = {
+                   'allowBack': true,
+                   'allowReview': true,
+                   'autoMove': false,  // if true, it will move to next question automatically when answered.
+                   'duration': 0,  // indicates the time in which quiz needs to be completed. post that, quiz will be automatically submitted. 0 means unlimited.
+                   'pageSize': 1,
+                   'requiredAll': false,  // indicates if you must answer all the questions before submitting.
+                   'richText': false,
+                   'shuffleQuestions': false,
+                   'shuffleOptions': false,
+                   'showClock': false,
+                   'showPager': true,
+                   'theme': 'none'
+               };
+               var myVar = null;
+               $scope.myTimer = function (d) {
+
+                   ////if (d.getSeconds() <= 1)
+                   ////    d.setMinutes(d.getMinutes() - 1, 59, '00');
+
+                   ////var h = d.getHours();
+                   var m = d.getMinutes();
+                   var s = d.getSeconds() - 1;
+                   document.getElementById('countdown').innerHTML = s;
+
+                   if (s == 0)
+                   { angular.element('#nextQuestion').triggerHandler('click'); }
+                   else { d.setSeconds(s); }
+
+               }
+               $scope.TimeoutCall = function () {
+                   var warningmessage = document.getElementById('chattext').innerHTML;
+                  // alert(warningmessage);
+                   if (warningmessage != '') {
+                       $scope.showExam = false;
+                       $scope.Malpractice();
+                   }
+                   else
+                   {
+                       alert('Time out');
+                       clearInterval(myVar);
+                       $scope.currentPage = $scope.currentPage + 1;
+                       alert($scope.currentPage);
+                   }
+                  
+               }
+               // $scope.ImageShow = false;
+               $scope.getQuestionList = function () {
+
+
+                   var req = {
+                       method: 'POST', url: '/DrivingTest/GetQuestions',
+                       headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                   }
+                   $http(req).
+                       then(function (response) {
+
+                           $scope.QuestionList = response.data;
+
+                       }, function (response) {
+
+                       });
+               }
+               $scope.numberOfPages = function () {
+                   return Math.ceil($scope.QuestionList.length / $scope.pageSize);
+               }
+               $scope.onSelect = function (question, option) {
+
+                   question.AnswerOptions.forEach(function (element, index, array) {
+
+                       if (element.AnswerOptionsID != option.AnswerOptionsID) {
+                           element.Selected = false;
+                       }
+                       question.Answered = option.AnswerOptionsID;
+
+                   });
+                   question.TimeTaken = document.getElementById('countdown').innerHTML
+
+                   // $.post('/DrivingTest/Submit/', { answers: answers, success: function (data) { window.location = "/DrivingTest/VideoTest"; } });
+                   //if ($scope.config.autoMove == true && $scope.currentPage < $scope.totalItems)
+                   //    $scope.currentPage++;
+               }
+               $scope.onSubmit = function () {
+                   var answers = [];
+
+                   $http.post('/DrivingTest/Submit', $scope.QuestionList).success(function (data, status) {
+                        window.location = "/ExamResults/ExamResultWithGrade";
+                       //window.location = "/DrivingTest/StartVideoIndicatorTest";
+                   });
+                   console.log($scope.questions);
+                   //$scope.mode = 'result';
+               }
+               $scope.QuestionDuration = function (s) {
+
+                   var d = new Date();
+                   d.setHours('00', '00', s, '00');
+                   myVar = setInterval(function () { $scope.myTimer(d) }, 1000);
+               }
+               $scope.Malpractice = function () {
+                   var answers = [];
+
+                   $http.post('/DrivingTest/Malpractice').success(function (data, status) {
+                       window.location = "/ExamResults/ExamResultWithGrade";
+                       //window.location = "/DrivingTest/StartVideoIndicatorTest";
+                   });
+                   console.log($scope.questions);
+               }
+               $scope.NextQuestion = function () {
+                   var warningmessage = document.getElementById('chattext').innerHTML;
+                  // alert(warningmessage);
+                   if (warningmessage != '')
+                   {
+                       $scope.showExam = false;
+                       $scope.Malpractice();
+
+                   }
+                   else
+                   {
+                       clearInterval(myVar);
+                       myVar = null;
+                       $scope.currentPage = $scope.currentPage + 1;
+                   }
+                   
+               }
+               $scope.showExam = false;
+               var JsVisibility = '@ViewBag.Visibility';
+               if (JsVisibility == 'false' || JsVisibility == 'False') {
+                   $scope.showExam = true;
+                   $scope.getQuestionList();
+               }
+               //chattext
+               //////var warningmessage = document.getElementById('videoMonitoring').innerHTML;
+             //  alert('wa ' + JsVisibility);
+               ////if(warningmessage !='')
+               ////{
+               ////    $scope.showExam = false;
+               ////}
+               //$scope.NextQuestion();
+              // $scope.myVar = document.getElementById('chattext').innerHTML;;
+
+               //$scope.$watch('warningmessage', function () {
+               //   // alert(warningmessage);
+               //  //  alert('hey, warningmessage has changed!');
+               //});
+               //WarningMessage
+               ////$scope.WarningMessage = function () {
+               ////    alert('dg');
+               ////    console.log('warningmessage');
+               ////};
+           }]);
+
+        //We already have a limitTo filter built-in to angular,
+        //let's make a startFrom filter
+        app.filter('startFrom', function () {
+            return function (input, start) {
+                start = +start; //parse to int
+                return input.slice(start);
+            }
+        });
+        
+    </script>
+</body>
+</html>

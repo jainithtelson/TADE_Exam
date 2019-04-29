@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "AllocatedCandidateDetails";
+
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "DistributeCandidatesToExaminersController";
+
+}
+
+<h2>Allocated Candidate Details for today</h2>
+<div>
+    <table class="tablewithheader">
+        <thead>
+            <tr><th>First name</th><th>Last name</th><th>Exam Date</th><th>slot</th></tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="c in AllocatedCandDetails">
+                @*<td>
+                    {{c.candidateId}}
+                </td>*@
+                <td>
+                    {{c.firstName}}
+                </td>
+                <td>
+                    {{c.lastName}}
+                </td>
+                <td>
+                    {{c.bookeddate}}
+                </td>
+
+                <td>
+                    {{c.slot}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   
+</div>
+<div style="margin: 5px;">
+    @*<button class="btn btn-default">Ready for conducting exam</button>*@
+    <input type="button" value="Ready for conducting exam" onclick="location.href='@Url.Action("VideoMonitoring", "Examiner")'" />
+</div>
+@*<button class="btn btn-default" ng-click="onSubmit();">Submit Quiz</button>*@
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.getAllocatedCandDetails = function () {
+
+
+               var req = {
+                   method: 'POST', url: '/Examiner/GetAllocatedCandDetails',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.AllocatedCandDetails = response.data;
+
+                   }, function (response) {
+
+                   });
+           }
+           $scope.getAllocatedCandDetails();
+       }]);
+
+
+</script>

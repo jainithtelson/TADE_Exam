@@ -1,0 +1,1740 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TADEDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswerOptions">
+          <Key>
+            <PropertyRef Name="AnswerOptionsID" />
+          </Key>
+          <Property Name="AnswerOptionsID" Type="int" Nullable="false" />
+          <Property Name="ObjectiveTestID" Type="int" Nullable="false" />
+          <Property Name="AnswerOptionsDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AvailableDates">
+          <Key>
+            <PropertyRef Name="AvailableDatesId" />
+          </Key>
+          <Property Name="AvailableDatesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AvailableDate" Type="date" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="AvailableDatesHistory">
+          <Key>
+            <PropertyRef Name="AvailableDatesId" />
+          </Key>
+          <Property Name="AvailableDatesId" Type="int" Nullable="false" />
+          <Property Name="AvailableDate" Type="date" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="AvailableSeatsForSlots">
+          <Key>
+            <PropertyRef Name="AvailableSeatsForSlotsId" />
+          </Key>
+          <Property Name="AvailableSeatsForSlotsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AvailableDatesId" Type="int" />
+          <Property Name="SlotId" Type="int" />
+          <Property Name="TotalSeats" Type="int" />
+          <Property Name="RemainingSeats" Type="int" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="CandidateDetails">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailApproved" Type="bit" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine3" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DrivingLicenseNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="PhotoPath" Type="nvarchar" MaxLength="150" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ExaminerId" Type="int" />
+          <Property Name="uniquetoken" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExamAttended" Type="bit" />
+          <Property Name="FrontCamera" Type="bit" />
+          <Property Name="BackCamera" Type="bit" />
+        </EntityType>
+        <EntityType Name="CandidateExamBookingDetails">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="BookedDate" Type="datetime" />
+          <Property Name="SlotId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="CandidateVerification">
+          <Key>
+            <PropertyRef Name="VerificaitonId" />
+          </Key>
+          <Property Name="VerificaitonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="bit" Nullable="false" />
+          <Property Name="DrivingLicense" Type="bit" Nullable="false" />
+          <Property Name="FrontCamera" Type="bit" Nullable="false" />
+          <Property Name="Microphone" Type="bit" Nullable="false" />
+          <Property Name="BackCamera" Type="bit" Nullable="false" />
+          <Property Name="LipMovement" Type="bit" Nullable="false" />
+          <Property Name="EligibleForStartExam" Type="bit" Nullable="false" />
+          <Property Name="VerifiedBy" Type="int" Nullable="false" />
+          <Property Name="VerifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyDetails">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLIne1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLIne2" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLIne3" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="50" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyLogo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NatureofBusiness" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanySize" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="RoleType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ExaminerDetails">
+          <Key>
+            <PropertyRef Name="ExaminerId" />
+          </Key>
+          <Property Name="ExaminerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastCandidateAllocation" Type="date" />
+          <Property Name="CandidateAllocated" Type="bit" />
+          <Property Name="NumberofCandidatesAllocated" Type="int" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Emergency" Type="bit" />
+        </EntityType>
+        <EntityType Name="ExaminorAvailability">
+          <Key>
+            <PropertyRef Name="ExaminorId" />
+          </Key>
+          <Property Name="ExaminorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Availability" Type="bit" />
+        </EntityType>
+        <EntityType Name="ExamResults">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Explanation" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ExamResultsDummy">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateIdDummy" Type="int" Nullable="false" />
+          <Property Name="Date" Type="nvarchar" MaxLength="50" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Explanation" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ExamSlots">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlotName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Timefrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="TimefromMinutes" Type="nvarchar" MaxLength="50" />
+          <Property Name="TimeTo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TimeToMinutes" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="ExamType">
+          <Key>
+            <PropertyRef Name="ExamId" />
+          </Key>
+          <Property Name="ExamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="LatestNews">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NewsScreenshotPath" Type="nvarchar" MaxLength="250" />
+          <Property Name="SourceLink" Type="nvarchar(max)" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ObjectiveTest">
+          <Key>
+            <PropertyRef Name="ObjectiveTestID" />
+          </Key>
+          <Property Name="ObjectiveTestID" Type="int" Nullable="false" />
+          <Property Name="Question" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QuestionImage" Type="nvarchar" MaxLength="150" />
+          <Property Name="QuestionTypeId" Type="int" Nullable="false" />
+          <Property Name="CorrectAnswerID" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Answered" Type="int" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="ImageShow" Type="bit" />
+          <Property Name="AllowedTime" Type="int" />
+          <Property Name="Priority" Type="nvarchar" MaxLength="150" />
+          <Property Name="VideoLink" Type="nvarchar" MaxLength="150" />
+          <Property Name="VideoShow" Type="bit" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="int" Nullable="false" />
+          <Property Name="QuestionType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Testimonials">
+          <Key>
+            <PropertyRef Name="TestimonialId" />
+          </Key>
+          <Property Name="TestimonialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CandidateId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="AddedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VideoScore">
+          <Key>
+            <PropertyRef Name="ScoreID" />
+          </Key>
+          <Property Name="ScoreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VideoID" Type="int" Nullable="false" />
+          <Property Name="TimeInterval" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MouseClick" Type="nvarchar" MaxLength="50" />
+          <Property Name="KeyboardPress" Type="nvarchar" MaxLength="50" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="VideoType">
+          <Key>
+            <PropertyRef Name="VideoID" />
+          </Key>
+          <Property Name="VideoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VideoType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AnswerOptions_ObjectiveTest">
+          <End Role="ObjectiveTest" Type="Self.ObjectiveTest" Multiplicity="1" />
+          <End Role="AnswerOptions" Type="Self.AnswerOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjectiveTest">
+              <PropertyRef Name="ObjectiveTestID" />
+            </Principal>
+            <Dependent Role="AnswerOptions">
+              <PropertyRef Name="ObjectiveTestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableSeatsForSlots_AvailableDates">
+          <End Role="AvailableDates" Type="Self.AvailableDates" Multiplicity="0..1" />
+          <End Role="AvailableSeatsForSlots" Type="Self.AvailableSeatsForSlots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableDates">
+              <PropertyRef Name="AvailableDatesId" />
+            </Principal>
+            <Dependent Role="AvailableSeatsForSlots">
+              <PropertyRef Name="AvailableDatesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AvailableSeatsForSlots_ExamSlots">
+          <End Role="ExamSlots" Type="Self.ExamSlots" Multiplicity="0..1" />
+          <End Role="AvailableSeatsForSlots" Type="Self.AvailableSeatsForSlots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamSlots">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="AvailableSeatsForSlots">
+              <PropertyRef Name="SlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="CandidateDetails" Type="Self.CandidateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateExamBookingDetails_CandidateDetails">
+          <End Role="CandidateDetails" Type="Self.CandidateDetails" Multiplicity="1" />
+          <End Role="CandidateExamBookingDetails" Type="Self.CandidateExamBookingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetails">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="CandidateExamBookingDetails">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateExamBookingDetails_ExamSlots">
+          <End Role="ExamSlots" Type="Self.ExamSlots" Multiplicity="1" />
+          <End Role="CandidateExamBookingDetails" Type="Self.CandidateExamBookingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamSlots">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="CandidateExamBookingDetails">
+              <PropertyRef Name="SlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVerification_CandidateDetails">
+          <End Role="CandidateDetails" Type="Self.CandidateDetails" Multiplicity="1" />
+          <End Role="CandidateVerification" Type="Self.CandidateVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetails">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="CandidateVerification">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVerification_ExaminerDetails">
+          <End Role="ExaminerDetails" Type="Self.ExaminerDetails" Multiplicity="1" />
+          <End Role="CandidateVerification" Type="Self.CandidateVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExaminerDetails">
+              <PropertyRef Name="ExaminerId" />
+            </Principal>
+            <Dependent Role="CandidateVerification">
+              <PropertyRef Name="VerifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="CompanyDetails" Type="Self.CompanyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminerDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ExaminerDetails" Type="Self.ExaminerDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExaminerDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminorAvailability_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ExaminorAvailability" Type="Self.ExaminorAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExaminorAvailability">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamResults_CandidateDetails">
+          <End Role="CandidateDetails" Type="Self.CandidateDetails" Multiplicity="1" />
+          <End Role="ExamResults" Type="Self.ExamResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetails">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="ExamResults">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamResults_ExamType">
+          <End Role="ExamType" Type="Self.ExamType" Multiplicity="1" />
+          <End Role="ExamResults" Type="Self.ExamResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamType">
+              <PropertyRef Name="ExamId" />
+            </Principal>
+            <Dependent Role="ExamResults">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LatestNews_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="LatestNews" Type="Self.LatestNews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LatestNews">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObjectiveTest_QuestionType">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1" />
+          <End Role="ObjectiveTest" Type="Self.ObjectiveTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="QuestionTypeId" />
+            </Principal>
+            <Dependent Role="ObjectiveTest">
+              <PropertyRef Name="QuestionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Testimonials_CandidateDetails">
+          <End Role="CandidateDetails" Type="Self.CandidateDetails" Multiplicity="1" />
+          <End Role="Testimonials" Type="Self.Testimonials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetails">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="Testimonials">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoScore_VideoType">
+          <End Role="VideoType" Type="Self.VideoType" Multiplicity="1" />
+          <End Role="VideoScore" Type="Self.VideoScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoType">
+              <PropertyRef Name="VideoID" />
+            </Principal>
+            <Dependent Role="VideoScore">
+              <PropertyRef Name="VideoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TADEDBModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerOptions" EntityType="Self.AnswerOptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableDates" EntityType="Self.AvailableDates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableDatesHistory" EntityType="Self.AvailableDatesHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableSeatsForSlots" EntityType="Self.AvailableSeatsForSlots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateDetails" EntityType="Self.CandidateDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateExamBookingDetails" EntityType="Self.CandidateExamBookingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateVerification" EntityType="Self.CandidateVerification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyDetails" EntityType="Self.CompanyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExaminerDetails" EntityType="Self.ExaminerDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExaminorAvailability" EntityType="Self.ExaminorAvailability" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamResults" EntityType="Self.ExamResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamResultsDummy" EntityType="Self.ExamResultsDummy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamSlots" EntityType="Self.ExamSlots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamType" EntityType="Self.ExamType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LatestNews" EntityType="Self.LatestNews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ObjectiveTest" EntityType="Self.ObjectiveTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Testimonials" EntityType="Self.Testimonials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoScore" EntityType="Self.VideoScore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoType" EntityType="Self.VideoType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AnswerOptions_ObjectiveTest" Association="Self.FK_AnswerOptions_ObjectiveTest">
+            <End Role="ObjectiveTest" EntitySet="ObjectiveTest" />
+            <End Role="AnswerOptions" EntitySet="AnswerOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableSeatsForSlots_AvailableDates" Association="Self.FK_AvailableSeatsForSlots_AvailableDates">
+            <End Role="AvailableDates" EntitySet="AvailableDates" />
+            <End Role="AvailableSeatsForSlots" EntitySet="AvailableSeatsForSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AvailableSeatsForSlots_ExamSlots" Association="Self.FK_AvailableSeatsForSlots_ExamSlots">
+            <End Role="ExamSlots" EntitySet="ExamSlots" />
+            <End Role="AvailableSeatsForSlots" EntitySet="AvailableSeatsForSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateDetails_AspNetUsers" Association="Self.FK_CandidateDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CandidateDetails" EntitySet="CandidateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateExamBookingDetails_CandidateDetails" Association="Self.FK_CandidateExamBookingDetails_CandidateDetails">
+            <End Role="CandidateDetails" EntitySet="CandidateDetails" />
+            <End Role="CandidateExamBookingDetails" EntitySet="CandidateExamBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateExamBookingDetails_ExamSlots" Association="Self.FK_CandidateExamBookingDetails_ExamSlots">
+            <End Role="ExamSlots" EntitySet="ExamSlots" />
+            <End Role="CandidateExamBookingDetails" EntitySet="CandidateExamBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVerification_CandidateDetails" Association="Self.FK_CandidateVerification_CandidateDetails">
+            <End Role="CandidateDetails" EntitySet="CandidateDetails" />
+            <End Role="CandidateVerification" EntitySet="CandidateVerification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVerification_ExaminerDetails" Association="Self.FK_CandidateVerification_ExaminerDetails">
+            <End Role="ExaminerDetails" EntitySet="ExaminerDetails" />
+            <End Role="CandidateVerification" EntitySet="CandidateVerification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDetails_AspNetUsers" Association="Self.FK_CompanyDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="CompanyDetails" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminerDetails_AspNetUsers" Association="Self.FK_ExaminerDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ExaminerDetails" EntitySet="ExaminerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminorAvailability_AspNetUsers" Association="Self.FK_ExaminorAvailability_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ExaminorAvailability" EntitySet="ExaminorAvailability" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamResults_CandidateDetails" Association="Self.FK_ExamResults_CandidateDetails">
+            <End Role="CandidateDetails" EntitySet="CandidateDetails" />
+            <End Role="ExamResults" EntitySet="ExamResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamResults_ExamType" Association="Self.FK_ExamResults_ExamType">
+            <End Role="ExamType" EntitySet="ExamType" />
+            <End Role="ExamResults" EntitySet="ExamResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LatestNews_AspNetUsers" Association="Self.FK_LatestNews_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="LatestNews" EntitySet="LatestNews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObjectiveTest_QuestionType" Association="Self.FK_ObjectiveTest_QuestionType">
+            <End Role="QuestionType" EntitySet="QuestionType" />
+            <End Role="ObjectiveTest" EntitySet="ObjectiveTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Testimonials_CandidateDetails" Association="Self.FK_Testimonials_CandidateDetails">
+            <End Role="CandidateDetails" EntitySet="CandidateDetails" />
+            <End Role="Testimonials" EntitySet="Testimonials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoScore_VideoType" Association="Self.FK_VideoScore_VideoType">
+            <End Role="VideoType" EntitySet="VideoType" />
+            <End Role="VideoScore" EntitySet="VideoScore" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TADEDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="TADEDBModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="VideoType">
+          <Key>
+            <PropertyRef Name="VideoID" />
+          </Key>
+          <Property Name="VideoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VideoType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoScores" Relationship="TADEDBModel.FK_VideoScore_VideoType" FromRole="VideoType" ToRole="VideoScore" />
+        </EntityType>
+        <EntityContainer Name="TADEDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="VideoTypes" EntityType="Self.VideoType" />
+          <EntitySet Name="VideoScores" EntityType="TADEDBModel.VideoScore" />
+          <AssociationSet Name="FK_VideoScore_VideoType" Association="TADEDBModel.FK_VideoScore_VideoType">
+            <End Role="VideoType" EntitySet="VideoTypes" />
+            <End Role="VideoScore" EntitySet="VideoScores" />
+          </AssociationSet>
+          <EntitySet Name="ExamTypes" EntityType="TADEDBModel.ExamType" />
+          <EntitySet Name="AnswerOptions" EntityType="TADEDBModel.AnswerOption" />
+          <EntitySet Name="ObjectiveTests" EntityType="TADEDBModel.ObjectiveTest" />
+          <EntitySet Name="QuestionTypes" EntityType="TADEDBModel.QuestionType" />
+          <AssociationSet Name="FK_AnswerOptions_ObjectiveTest" Association="TADEDBModel.FK_AnswerOptions_ObjectiveTest">
+            <End Role="ObjectiveTest" EntitySet="ObjectiveTests" />
+            <End Role="AnswerOption" EntitySet="AnswerOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObjectiveTest_QuestionType" Association="TADEDBModel.FK_ObjectiveTest_QuestionType">
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+            <End Role="ObjectiveTest" EntitySet="ObjectiveTests" />
+          </AssociationSet>
+          <EntitySet Name="ExamResults" EntityType="TADEDBModel.ExamResult" />
+          <AssociationSet Name="FK_ExamResults_ExamType" Association="TADEDBModel.FK_ExamResults_ExamType">
+            <End Role="ExamType" EntitySet="ExamTypes" />
+            <End Role="ExamResult" EntitySet="ExamResults" />
+          </AssociationSet>
+          <EntitySet Name="ExaminorAvailabilities" EntityType="TADEDBModel.ExaminorAvailability" />
+          <EntitySet Name="CandidateExamBookingDetails" EntityType="TADEDBModel.CandidateExamBookingDetail" />
+          <EntitySet Name="AvailableDates" EntityType="TADEDBModel.AvailableDate" />
+          <EntitySet Name="AvailableDatesHistories" EntityType="TADEDBModel.AvailableDatesHistory" />
+          <EntitySet Name="AvailableSeatsForSlots" EntityType="TADEDBModel.AvailableSeatsForSlot" />
+          <AssociationSet Name="FK_AvailableSeatsForSlots_AvailableDates" Association="TADEDBModel.FK_AvailableSeatsForSlots_AvailableDates">
+            <End Role="AvailableDate" EntitySet="AvailableDates" />
+            <End Role="AvailableSeatsForSlot" EntitySet="AvailableSeatsForSlots" />
+          </AssociationSet>
+          <EntitySet Name="ExamSlots" EntityType="TADEDBModel.ExamSlot" />
+          <AssociationSet Name="FK_AvailableSeatsForSlots_ExamSlots" Association="TADEDBModel.FK_AvailableSeatsForSlots_ExamSlots">
+            <End Role="ExamSlot" EntitySet="ExamSlots" />
+            <End Role="AvailableSeatsForSlot" EntitySet="AvailableSeatsForSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateExamBookingDetails_ExamSlots" Association="TADEDBModel.FK_CandidateExamBookingDetails_ExamSlots">
+            <End Role="ExamSlot" EntitySet="ExamSlots" />
+            <End Role="CandidateExamBookingDetail" EntitySet="CandidateExamBookingDetails" />
+          </AssociationSet>
+          <EntitySet Name="ExaminerDetails" EntityType="TADEDBModel.ExaminerDetail" />
+          <EntitySet Name="CandidateVerifications" EntityType="TADEDBModel.CandidateVerification" />
+          <AssociationSet Name="FK_CandidateVerification_ExaminerDetails" Association="TADEDBModel.FK_CandidateVerification_ExaminerDetails">
+            <End Role="ExaminerDetail" EntitySet="ExaminerDetails" />
+            <End Role="CandidateVerification" EntitySet="CandidateVerifications" />
+          </AssociationSet>
+          <EntitySet Name="Testimonials" EntityType="TADEDBModel.Testimonial" />
+          <EntitySet Name="LatestNews" EntityType="TADEDBModel.LatestNew" />
+          <EntitySet Name="AspNetUsers" EntityType="TADEDBModel.AspNetUser" />
+          <EntitySet Name="ExamResultsDummies" EntityType="TADEDBModel.ExamResultsDummy" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="TADEDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="TADEDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminerDetails_AspNetUsers" Association="TADEDBModel.FK_ExaminerDetails_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ExaminerDetail" EntitySet="ExaminerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExaminorAvailability_AspNetUsers" Association="TADEDBModel.FK_ExaminorAvailability_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ExaminorAvailability" EntitySet="ExaminorAvailabilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LatestNews_AspNetUsers" Association="TADEDBModel.FK_LatestNews_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="LatestNew" EntitySet="LatestNews" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="TADEDBModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="CandidateDetails" EntityType="TADEDBModel.CandidateDetail" />
+          <AssociationSet Name="FK_CandidateDetails_AspNetUsers" Association="TADEDBModel.FK_CandidateDetails_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="CandidateDetail" EntitySet="CandidateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateExamBookingDetails_CandidateDetails" Association="TADEDBModel.FK_CandidateExamBookingDetails_CandidateDetails">
+            <End Role="CandidateDetail" EntitySet="CandidateDetails" />
+            <End Role="CandidateExamBookingDetail" EntitySet="CandidateExamBookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateVerification_CandidateDetails" Association="TADEDBModel.FK_CandidateVerification_CandidateDetails">
+            <End Role="CandidateDetail" EntitySet="CandidateDetails" />
+            <End Role="CandidateVerification" EntitySet="CandidateVerifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExamResults_CandidateDetails" Association="TADEDBModel.FK_ExamResults_CandidateDetails">
+            <End Role="CandidateDetail" EntitySet="CandidateDetails" />
+            <End Role="ExamResult" EntitySet="ExamResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Testimonials_CandidateDetails" Association="TADEDBModel.FK_Testimonials_CandidateDetails">
+            <End Role="CandidateDetail" EntitySet="CandidateDetails" />
+            <End Role="Testimonial" EntitySet="Testimonials" />
+          </AssociationSet>
+          <EntitySet Name="CompanyDetails" EntityType="TADEDBModel.CompanyDetail" />
+          <AssociationSet Name="FK_CompanyDetails_AspNetUsers" Association="TADEDBModel.FK_CompanyDetails_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="CompanyDetail" EntitySet="CompanyDetails" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="VideoScore">
+          <Key>
+            <PropertyRef Name="ScoreID" />
+          </Key>
+          <Property Name="ScoreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VideoID" Type="Int32" Nullable="false" />
+          <Property Name="TimeInterval" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MouseClick" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KeyboardPress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="VideoType" Relationship="TADEDBModel.FK_VideoScore_VideoType" FromRole="VideoScore" ToRole="VideoType" />
+        </EntityType>
+        <Association Name="FK_VideoScore_VideoType">
+          <End Type="TADEDBModel.VideoType" Role="VideoType" Multiplicity="1" />
+          <End Type="TADEDBModel.VideoScore" Role="VideoScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoType">
+              <PropertyRef Name="VideoID" />
+            </Principal>
+            <Dependent Role="VideoScore">
+              <PropertyRef Name="VideoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExamType">
+          <Key>
+            <PropertyRef Name="ExamId" />
+          </Key>
+          <Property Name="ExamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="ExamResults" Relationship="TADEDBModel.FK_ExamResults_ExamType" FromRole="ExamType" ToRole="ExamResult" />
+        </EntityType>
+        <EntityType Name="AnswerOption">
+          <Key>
+            <PropertyRef Name="AnswerOptionsID" />
+          </Key>
+          <Property Name="AnswerOptionsID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectiveTestID" Type="Int32" Nullable="false" />
+          <Property Name="AnswerOptionsDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="ObjectiveTest" Relationship="TADEDBModel.FK_AnswerOptions_ObjectiveTest" FromRole="AnswerOption" ToRole="ObjectiveTest" />
+        </EntityType>
+        <EntityType Name="ObjectiveTest">
+          <Key>
+            <PropertyRef Name="ObjectiveTestID" />
+          </Key>
+          <Property Name="ObjectiveTestID" Type="Int32" Nullable="false" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionImage" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CorrectAnswerID" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Answered" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="ImageShow" Type="Boolean" />
+          <Property Name="AllowedTime" Type="Int32" />
+          <Property Name="Priority" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AnswerOptions" Relationship="TADEDBModel.FK_AnswerOptions_ObjectiveTest" FromRole="ObjectiveTest" ToRole="AnswerOption" />
+          <NavigationProperty Name="QuestionType" Relationship="TADEDBModel.FK_ObjectiveTest_QuestionType" FromRole="ObjectiveTest" ToRole="QuestionType" />
+          <Property Name="VideoLink" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="VideoShow" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ObjectiveTests" Relationship="TADEDBModel.FK_ObjectiveTest_QuestionType" FromRole="QuestionType" ToRole="ObjectiveTest" />
+        </EntityType>
+        <Association Name="FK_AnswerOptions_ObjectiveTest">
+          <End Type="TADEDBModel.ObjectiveTest" Role="ObjectiveTest" Multiplicity="1" />
+          <End Type="TADEDBModel.AnswerOption" Role="AnswerOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjectiveTest">
+              <PropertyRef Name="ObjectiveTestID" />
+            </Principal>
+            <Dependent Role="AnswerOption">
+              <PropertyRef Name="ObjectiveTestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObjectiveTest_QuestionType">
+          <End Type="TADEDBModel.QuestionType" Role="QuestionType" Multiplicity="1" />
+          <End Type="TADEDBModel.ObjectiveTest" Role="ObjectiveTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="QuestionTypeId" />
+            </Principal>
+            <Dependent Role="ObjectiveTest">
+              <PropertyRef Name="QuestionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExamResult">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Explanation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ExamType" Relationship="TADEDBModel.FK_ExamResults_ExamType" FromRole="ExamResult" ToRole="ExamType" />
+          <NavigationProperty Name="CandidateDetail" Relationship="TADEDBModel.FK_ExamResults_CandidateDetails" FromRole="ExamResult" ToRole="CandidateDetail" />
+        </EntityType>
+        <Association Name="FK_ExamResults_ExamType">
+          <End Type="TADEDBModel.ExamType" Role="ExamType" Multiplicity="1" />
+          <End Type="TADEDBModel.ExamResult" Role="ExamResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamType">
+              <PropertyRef Name="ExamId" />
+            </Principal>
+            <Dependent Role="ExamResult">
+              <PropertyRef Name="ExamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExaminorAvailability">
+          <Key>
+            <PropertyRef Name="ExaminorId" />
+          </Key>
+          <Property Name="ExaminorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Availability" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_ExaminorAvailability_AspNetUsers" FromRole="ExaminorAvailability" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="CandidateExamBookingDetail">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="BookedDate" Type="DateTime" Precision="3" />
+          <Property Name="SlotId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="ExamSlot" Relationship="TADEDBModel.FK_CandidateExamBookingDetails_ExamSlots" FromRole="CandidateExamBookingDetail" ToRole="ExamSlot" />
+          <NavigationProperty Name="CandidateDetail" Relationship="TADEDBModel.FK_CandidateExamBookingDetails_CandidateDetails" FromRole="CandidateExamBookingDetail" ToRole="CandidateDetail" />
+        </EntityType>
+        <EntityType Name="AvailableDate">
+          <Key>
+            <PropertyRef Name="AvailableDatesId" />
+          </Key>
+          <Property Name="AvailableDatesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AvailableDate1" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="AvailableSeatsForSlots" Relationship="TADEDBModel.FK_AvailableSeatsForSlots_AvailableDates" FromRole="AvailableDate" ToRole="AvailableSeatsForSlot" />
+        </EntityType>
+        <EntityType Name="AvailableDatesHistory">
+          <Key>
+            <PropertyRef Name="AvailableDatesId" />
+          </Key>
+          <Property Name="AvailableDatesId" Type="Int32" Nullable="false" />
+          <Property Name="AvailableDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="AvailableSeatsForSlot">
+          <Key>
+            <PropertyRef Name="AvailableSeatsForSlotsId" />
+          </Key>
+          <Property Name="AvailableSeatsForSlotsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AvailableDatesId" Type="Int32" />
+          <Property Name="SlotId" Type="Int32" />
+          <Property Name="TotalSeats" Type="Int32" />
+          <Property Name="RemainingSeats" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="AvailableDate" Relationship="TADEDBModel.FK_AvailableSeatsForSlots_AvailableDates" FromRole="AvailableSeatsForSlot" ToRole="AvailableDate" />
+          <NavigationProperty Name="ExamSlot" Relationship="TADEDBModel.FK_AvailableSeatsForSlots_ExamSlots" FromRole="AvailableSeatsForSlot" ToRole="ExamSlot" />
+        </EntityType>
+        <Association Name="FK_AvailableSeatsForSlots_AvailableDates">
+          <End Type="TADEDBModel.AvailableDate" Role="AvailableDate" Multiplicity="0..1" />
+          <End Type="TADEDBModel.AvailableSeatsForSlot" Role="AvailableSeatsForSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AvailableDate">
+              <PropertyRef Name="AvailableDatesId" />
+            </Principal>
+            <Dependent Role="AvailableSeatsForSlot">
+              <PropertyRef Name="AvailableDatesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExamSlot">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlotName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Timefrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimefromMinutes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeToMinutes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="AvailableSeatsForSlots" Relationship="TADEDBModel.FK_AvailableSeatsForSlots_ExamSlots" FromRole="ExamSlot" ToRole="AvailableSeatsForSlot" />
+          <NavigationProperty Name="CandidateExamBookingDetails" Relationship="TADEDBModel.FK_CandidateExamBookingDetails_ExamSlots" FromRole="ExamSlot" ToRole="CandidateExamBookingDetail" />
+        </EntityType>
+        <Association Name="FK_AvailableSeatsForSlots_ExamSlots">
+          <End Type="TADEDBModel.ExamSlot" Role="ExamSlot" Multiplicity="0..1" />
+          <End Type="TADEDBModel.AvailableSeatsForSlot" Role="AvailableSeatsForSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamSlot">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="AvailableSeatsForSlot">
+              <PropertyRef Name="SlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateExamBookingDetails_ExamSlots">
+          <End Type="TADEDBModel.ExamSlot" Role="ExamSlot" Multiplicity="1" />
+          <End Type="TADEDBModel.CandidateExamBookingDetail" Role="CandidateExamBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamSlot">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="CandidateExamBookingDetail">
+              <PropertyRef Name="SlotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExaminerDetail">
+          <Key>
+            <PropertyRef Name="ExaminerId" />
+          </Key>
+          <Property Name="ExaminerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastCandidateAllocation" Type="DateTime" Precision="0" />
+          <Property Name="CandidateAllocated" Type="Boolean" />
+          <Property Name="NumberofCandidatesAllocated" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Emergency" Type="Boolean" />
+          <NavigationProperty Name="CandidateVerifications" Relationship="TADEDBModel.FK_CandidateVerification_ExaminerDetails" FromRole="ExaminerDetail" ToRole="CandidateVerification" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_ExaminerDetails_AspNetUsers" FromRole="ExaminerDetail" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="CandidateVerification">
+          <Key>
+            <PropertyRef Name="VerificaitonId" />
+          </Key>
+          <Property Name="VerificaitonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="Boolean" Nullable="false" />
+          <Property Name="DrivingLicense" Type="Boolean" Nullable="false" />
+          <Property Name="FrontCamera" Type="Boolean" Nullable="false" />
+          <Property Name="Microphone" Type="Boolean" Nullable="false" />
+          <Property Name="BackCamera" Type="Boolean" Nullable="false" />
+          <Property Name="LipMovement" Type="Boolean" Nullable="false" />
+          <Property Name="EligibleForStartExam" Type="Boolean" Nullable="false" />
+          <Property Name="VerifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="VerifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ExaminerDetail" Relationship="TADEDBModel.FK_CandidateVerification_ExaminerDetails" FromRole="CandidateVerification" ToRole="ExaminerDetail" />
+          <NavigationProperty Name="CandidateDetail" Relationship="TADEDBModel.FK_CandidateVerification_CandidateDetails" FromRole="CandidateVerification" ToRole="CandidateDetail" />
+        </EntityType>
+        <Association Name="FK_CandidateVerification_ExaminerDetails">
+          <End Type="TADEDBModel.ExaminerDetail" Role="ExaminerDetail" Multiplicity="1" />
+          <End Type="TADEDBModel.CandidateVerification" Role="CandidateVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExaminerDetail">
+              <PropertyRef Name="ExaminerId" />
+            </Principal>
+            <Dependent Role="CandidateVerification">
+              <PropertyRef Name="VerifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Testimonial">
+          <Key>
+            <PropertyRef Name="TestimonialId" />
+          </Key>
+          <Property Name="TestimonialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AddedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CandidateDetail" Relationship="TADEDBModel.FK_Testimonials_CandidateDetails" FromRole="Testimonial" ToRole="CandidateDetail" />
+        </EntityType>
+        <EntityType Name="LatestNew">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewsScreenshotPath" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SourceLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_LatestNews_AspNetUsers" FromRole="LatestNew" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="TADEDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="TADEDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="ExaminerDetails" Relationship="TADEDBModel.FK_ExaminerDetails_AspNetUsers" FromRole="AspNetUser" ToRole="ExaminerDetail" />
+          <NavigationProperty Name="ExaminorAvailabilities" Relationship="TADEDBModel.FK_ExaminorAvailability_AspNetUsers" FromRole="AspNetUser" ToRole="ExaminorAvailability" />
+          <NavigationProperty Name="LatestNews" Relationship="TADEDBModel.FK_LatestNews_AspNetUsers" FromRole="AspNetUser" ToRole="LatestNew" />
+          <NavigationProperty Name="AspNetRoles" Relationship="TADEDBModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="CandidateDetails" Relationship="TADEDBModel.FK_CandidateDetails_AspNetUsers" FromRole="AspNetUser" ToRole="CandidateDetail" />
+          <NavigationProperty Name="CompanyDetails" Relationship="TADEDBModel.FK_CompanyDetails_AspNetUsers" FromRole="AspNetUser" ToRole="CompanyDetail" />
+        </EntityType>
+        <EntityType Name="ExamResultsDummy">
+          <Key>
+            <PropertyRef Name="ResultId" />
+          </Key>
+          <Property Name="ResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CandidateIdDummy" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Explanation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TADEDBModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TADEDBModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminerDetails_AspNetUsers">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TADEDBModel.ExaminerDetail" Role="ExaminerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExaminerDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExaminorAvailability_AspNetUsers">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TADEDBModel.ExaminorAvailability" Role="ExaminorAvailability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExaminorAvailability">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LatestNews_AspNetUsers">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TADEDBModel.LatestNew" Role="LatestNew" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LatestNew">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="TADEDBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CandidateDetail">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailApproved" Type="Boolean" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DrivingLicenseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoPath" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ExaminerId" Type="Int32" />
+          <Property Name="uniquetoken" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExamAttended" Type="Boolean" />
+          <Property Name="FrontCamera" Type="Boolean" />
+          <Property Name="BackCamera" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_CandidateDetails_AspNetUsers" FromRole="CandidateDetail" ToRole="AspNetUser" />
+          <NavigationProperty Name="CandidateExamBookingDetails" Relationship="TADEDBModel.FK_CandidateExamBookingDetails_CandidateDetails" FromRole="CandidateDetail" ToRole="CandidateExamBookingDetail" />
+          <NavigationProperty Name="CandidateVerifications" Relationship="TADEDBModel.FK_CandidateVerification_CandidateDetails" FromRole="CandidateDetail" ToRole="CandidateVerification" />
+          <NavigationProperty Name="ExamResults" Relationship="TADEDBModel.FK_ExamResults_CandidateDetails" FromRole="CandidateDetail" ToRole="ExamResult" />
+          <NavigationProperty Name="Testimonials" Relationship="TADEDBModel.FK_Testimonials_CandidateDetails" FromRole="CandidateDetail" ToRole="Testimonial" />
+        </EntityType>
+        <Association Name="FK_CandidateDetails_AspNetUsers">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TADEDBModel.CandidateDetail" Role="CandidateDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CandidateDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateExamBookingDetails_CandidateDetails">
+          <End Type="TADEDBModel.CandidateDetail" Role="CandidateDetail" Multiplicity="1" />
+          <End Type="TADEDBModel.CandidateExamBookingDetail" Role="CandidateExamBookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetail">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="CandidateExamBookingDetail">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateVerification_CandidateDetails">
+          <End Type="TADEDBModel.CandidateDetail" Role="CandidateDetail" Multiplicity="1" />
+          <End Type="TADEDBModel.CandidateVerification" Role="CandidateVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetail">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="CandidateVerification">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExamResults_CandidateDetails">
+          <End Type="TADEDBModel.CandidateDetail" Role="CandidateDetail" Multiplicity="1" />
+          <End Type="TADEDBModel.ExamResult" Role="ExamResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetail">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="ExamResult">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Testimonials_CandidateDetails">
+          <End Type="TADEDBModel.CandidateDetail" Role="CandidateDetail" Multiplicity="1" />
+          <End Type="TADEDBModel.Testimonial" Role="Testimonial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateDetail">
+              <PropertyRef Name="CandidateId" />
+            </Principal>
+            <Dependent Role="Testimonial">
+              <PropertyRef Name="CandidateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CompanyDetail">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLIne1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLIne2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLIne3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NatureofBusiness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanySize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="RoleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="TADEDBModel.FK_CompanyDetails_AspNetUsers" FromRole="CompanyDetail" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_CompanyDetails_AspNetUsers">
+          <End Type="TADEDBModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TADEDBModel.CompanyDetail" Role="CompanyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TADEDBModelStoreContainer" CdmEntityContainer="TADEDBEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="TADEDBModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="TADEDBModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="TADEDBModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="TADEDBModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoTypes">
+            <EntityTypeMapping TypeName="TADEDBModel.VideoType">
+              <MappingFragment StoreEntitySet="VideoType">
+                <ScalarProperty Name="VideoID" ColumnName="VideoID" />
+                <ScalarProperty Name="VideoType1" ColumnName="VideoType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoScores">
+            <EntityTypeMapping TypeName="TADEDBModel.VideoScore">
+              <MappingFragment StoreEntitySet="VideoScore">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="KeyboardPress" ColumnName="KeyboardPress" />
+                <ScalarProperty Name="MouseClick" ColumnName="MouseClick" />
+                <ScalarProperty Name="TimeInterval" ColumnName="TimeInterval" />
+                <ScalarProperty Name="VideoID" ColumnName="VideoID" />
+                <ScalarProperty Name="ScoreID" ColumnName="ScoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamTypes">
+            <EntityTypeMapping TypeName="TADEDBModel.ExamType">
+              <MappingFragment StoreEntitySet="ExamType">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ExamType1" ColumnName="ExamType" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerOptions">
+            <EntityTypeMapping TypeName="TADEDBModel.AnswerOption">
+              <MappingFragment StoreEntitySet="AnswerOptions">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AnswerOptionsDescription" ColumnName="AnswerOptionsDescription" />
+                <ScalarProperty Name="ObjectiveTestID" ColumnName="ObjectiveTestID" />
+                <ScalarProperty Name="AnswerOptionsID" ColumnName="AnswerOptionsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ObjectiveTests">
+            <EntityTypeMapping TypeName="TADEDBModel.ObjectiveTest">
+              <MappingFragment StoreEntitySet="ObjectiveTest">
+                <ScalarProperty Name="VideoShow" ColumnName="VideoShow" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="AllowedTime" ColumnName="AllowedTime" />
+                <ScalarProperty Name="ImageShow" ColumnName="ImageShow" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Answered" ColumnName="Answered" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="CorrectAnswerID" ColumnName="CorrectAnswerID" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+                <ScalarProperty Name="QuestionImage" ColumnName="QuestionImage" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="ObjectiveTestID" ColumnName="ObjectiveTestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="TADEDBModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionType">
+                <ScalarProperty Name="QuestionType1" ColumnName="QuestionType" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamResults">
+            <EntityTypeMapping TypeName="TADEDBModel.ExamResult">
+              <MappingFragment StoreEntitySet="ExamResults">
+                <ScalarProperty Name="Explanation" ColumnName="Explanation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="ResultId" ColumnName="ResultId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminorAvailabilities">
+            <EntityTypeMapping TypeName="TADEDBModel.ExaminorAvailability">
+              <MappingFragment StoreEntitySet="ExaminorAvailability">
+                <ScalarProperty Name="Availability" ColumnName="Availability" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ExaminorId" ColumnName="ExaminorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateExamBookingDetails">
+            <EntityTypeMapping TypeName="TADEDBModel.CandidateExamBookingDetail">
+              <MappingFragment StoreEntitySet="CandidateExamBookingDetails">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SlotId" ColumnName="SlotId" />
+                <ScalarProperty Name="BookedDate" ColumnName="BookedDate" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableDates">
+            <EntityTypeMapping TypeName="TADEDBModel.AvailableDate">
+              <MappingFragment StoreEntitySet="AvailableDates">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AvailableDate1" ColumnName="AvailableDate" />
+                <ScalarProperty Name="AvailableDatesId" ColumnName="AvailableDatesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableDatesHistories">
+            <EntityTypeMapping TypeName="TADEDBModel.AvailableDatesHistory">
+              <MappingFragment StoreEntitySet="AvailableDatesHistory">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AvailableDate" ColumnName="AvailableDate" />
+                <ScalarProperty Name="AvailableDatesId" ColumnName="AvailableDatesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableSeatsForSlots">
+            <EntityTypeMapping TypeName="TADEDBModel.AvailableSeatsForSlot">
+              <MappingFragment StoreEntitySet="AvailableSeatsForSlots">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RemainingSeats" ColumnName="RemainingSeats" />
+                <ScalarProperty Name="TotalSeats" ColumnName="TotalSeats" />
+                <ScalarProperty Name="SlotId" ColumnName="SlotId" />
+                <ScalarProperty Name="AvailableDatesId" ColumnName="AvailableDatesId" />
+                <ScalarProperty Name="AvailableSeatsForSlotsId" ColumnName="AvailableSeatsForSlotsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamSlots">
+            <EntityTypeMapping TypeName="TADEDBModel.ExamSlot">
+              <MappingFragment StoreEntitySet="ExamSlots">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TimeToMinutes" ColumnName="TimeToMinutes" />
+                <ScalarProperty Name="TimeTo" ColumnName="TimeTo" />
+                <ScalarProperty Name="TimefromMinutes" ColumnName="TimefromMinutes" />
+                <ScalarProperty Name="Timefrom" ColumnName="Timefrom" />
+                <ScalarProperty Name="SlotName" ColumnName="SlotName" />
+                <ScalarProperty Name="SlotId" ColumnName="SlotId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExaminerDetails">
+            <EntityTypeMapping TypeName="TADEDBModel.ExaminerDetail">
+              <MappingFragment StoreEntitySet="ExaminerDetails">
+                <ScalarProperty Name="Emergency" ColumnName="Emergency" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="NumberofCandidatesAllocated" ColumnName="NumberofCandidatesAllocated" />
+                <ScalarProperty Name="CandidateAllocated" ColumnName="CandidateAllocated" />
+                <ScalarProperty Name="LastCandidateAllocation" ColumnName="LastCandidateAllocation" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ExaminerId" ColumnName="ExaminerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateVerifications">
+            <EntityTypeMapping TypeName="TADEDBModel.CandidateVerification">
+              <MappingFragment StoreEntitySet="CandidateVerification">
+                <ScalarProperty Name="VerifiedOn" ColumnName="VerifiedOn" />
+                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
+                <ScalarProperty Name="EligibleForStartExam" ColumnName="EligibleForStartExam" />
+                <ScalarProperty Name="LipMovement" ColumnName="LipMovement" />
+                <ScalarProperty Name="BackCamera" ColumnName="BackCamera" />
+                <ScalarProperty Name="Microphone" ColumnName="Microphone" />
+                <ScalarProperty Name="FrontCamera" ColumnName="FrontCamera" />
+                <ScalarProperty Name="DrivingLicense" ColumnName="DrivingLicense" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="VerificaitonId" ColumnName="VerificaitonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Testimonials">
+            <EntityTypeMapping TypeName="TADEDBModel.Testimonial">
+              <MappingFragment StoreEntitySet="Testimonials">
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+                <ScalarProperty Name="TestimonialId" ColumnName="TestimonialId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LatestNews">
+            <EntityTypeMapping TypeName="TADEDBModel.LatestNew">
+              <MappingFragment StoreEntitySet="LatestNews">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="SourceLink" ColumnName="SourceLink" />
+                <ScalarProperty Name="NewsScreenshotPath" ColumnName="NewsScreenshotPath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="NewsId" ColumnName="NewsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="TADEDBModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamResultsDummies">
+            <EntityTypeMapping TypeName="TADEDBModel.ExamResultsDummy">
+              <MappingFragment StoreEntitySet="ExamResultsDummy">
+                <ScalarProperty Name="Explanation" ColumnName="Explanation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CandidateIdDummy" ColumnName="CandidateIdDummy" />
+                <ScalarProperty Name="ResultId" ColumnName="ResultId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TADEDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="CandidateDetails">
+            <EntityTypeMapping TypeName="TADEDBModel.CandidateDetail">
+              <MappingFragment StoreEntitySet="CandidateDetails">
+                <ScalarProperty Name="BackCamera" ColumnName="BackCamera" />
+                <ScalarProperty Name="FrontCamera" ColumnName="FrontCamera" />
+                <ScalarProperty Name="ExamAttended" ColumnName="ExamAttended" />
+                <ScalarProperty Name="uniquetoken" ColumnName="uniquetoken" />
+                <ScalarProperty Name="ExaminerId" ColumnName="ExaminerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="DrivingLicenseNumber" ColumnName="DrivingLicenseNumber" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmailApproved" ColumnName="EmailApproved" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDetails">
+            <EntityTypeMapping TypeName="TADEDBModel.CompanyDetail">
+              <MappingFragment StoreEntitySet="CompanyDetails">
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CompanySize" ColumnName="CompanySize" />
+                <ScalarProperty Name="NatureofBusiness" ColumnName="NatureofBusiness" />
+                <ScalarProperty Name="CompanyLogo" ColumnName="CompanyLogo" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="AddressLIne3" ColumnName="AddressLIne3" />
+                <ScalarProperty Name="AddressLIne2" ColumnName="AddressLIne2" />
+                <ScalarProperty Name="AddressLIne1" ColumnName="AddressLIne1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

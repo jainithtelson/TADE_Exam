@@ -1,0 +1,302 @@
+﻿
+@{
+    ViewBag.Title = "DistributeCandidatesToExaminers";
+   
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "DistributeCandidatesToExaminersController";
+}
+<h2>Release Dates</h2>
+<div class="col-md-12">
+    <div class="col-md-2">
+        <label class="control-label left-align" for="txtBookedDate">
+            Select date to release for exam:
+        </label>
+    </div>
+    <div class="col-md-4">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="AvailableDate" ng-change='changedate()'
+                   value="{{AvailableDate | date: 'dd/MM/yyyy'}}" is-open="popup1.opened"
+                   min="minStartDate" max="maxStartDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+    </div>
+
+</div>
+<div ng-show="showAddTotalSeatsForSlot">
+    <div class="col-md-12">
+        <table class="tablewithheader">
+            <thead>
+                <tr><th>Slots</th><th>Total Seats</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="s in availableSeatsForSlot">
+
+                    <td>
+                        <input type="hidden" ng-model="s.AvailableDatesId" id="availableDatesId" value="s.AvailableDatesId" />
+                        <input type="hidden" ng-model="s.SlotId" id="slotId" value="s.SlotId" />
+                        <input type="hidden" ng-model="s.AvailableSeatsForSlotsId" id="availableSeatsForSlotsId" value="s.AvailableSeatsForSlotsId" />
+                        
+                        {{s.SlotName}}
+                    </td>
+                    <td>
+                        <input type="text" ng-model="s.TotalSeats" id="totalSeats" value="s.TotalSeats" />
+
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-12"><button class="btn btn-default" ng-click="onSlotSubmit();">Release Slots</button></div>
+</div>
+<div>
+    <table class="tablewithheader">
+        <thead>
+            <tr><th>Released Dates</th></tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="rd in releasedDates">
+
+                <td>
+                    {{rd.AvailableDate}}
+                </td>
+               
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2>Distribute Candidates To Examiners</h2>
+
+<button class="btn btn-default" ng-click="onDistributeCandidates();">Distribute Candidates</button>
+
+<div>
+    <table class="tablewithheader">
+        <thead>
+            <tr><th>First name</th><th>Last name</th><th>Exam Date</th><th>slot</th><th>Examiner</th></tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="c in AllocatedCandDetails">
+                @*<td>
+                        {{c.candidateId}}
+                    </td>*@
+                <td>
+                    {{c.firstName}}
+                </td>
+                <td>
+                    {{c.lastName}}
+                </td>
+                <td>
+                    {{c.bookeddate}}
+                </td>
+
+                <td>
+                    {{c.slot}}
+                </td>
+                <td>{{c.examiner}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+        "use strict";
+        var app = angular.module('@ViewBag.ngApp', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
+
+        app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+           function ($scope, $http) {
+               $scope.AvailableDate='';
+               $scope.availableSeatsForSlot = [];
+               $scope.showAddTotalSeatsForSlot = false;
+
+               $scope.getReleasedDates = function () {
+
+                   
+                   var req = {
+                       method: 'POST', url: '/Administrator/GetReleasedDates',
+                       headers: { 'Content-Type': 'application/json; charset=utf-8' }
+
+                   }
+                   $http(req).
+                       then(function (response) {
+
+                           $scope.releasedDates = response.data;
+                           //$scope.releasedDates.AvailableDate = new Date(parseInt($scope.releasedDates.AvailableDate.replace("/Date(", "").replace(")/", ""), 10));
+                       }, function (response) {
+                           // alert('error');
+                       });
+               }
+
+               $scope.getExamSlotsForAvailabledate = function () {
+
+                  // alert($scope.AvailableDate);
+                   var req = {
+                       method: 'POST', url: '/Administrator/GetExamSlotsForAvailabledate',
+                       headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                       data: { 'AvailableDate': $scope.AvailableDate }
+                       
+                   }
+                   $http(req).
+                       then(function (response) {
+
+                           $scope.availableSeatsForSlot = response.data;
+                           $scope.showAddTotalSeatsForSlot = true;
+                           ////alert(response.data.AvailableDatesId);
+                       }, function (response) {
+                          // alert('error');
+                       });
+               }
+               $scope.onDistributeCandidates = function () {
+                   var req = {
+                       method: 'POST', url: '/Administrator/DistributeCandidates',
+                       headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                   }
+                   $http(req).
+                       then(function (response) {
+
+                           $scope.AllocatedCandDetails = response.data;
+
+                       }, function (response) {
+
+                       });
+                   ////var answers = [];
+
+                   ////$http.post('/Administrator/DistributeCandidates').success(function (data, status) {
+                   ////    alert(data);
+                     
+                   ////});
+                   ////console.log($scope.questions);
+                  
+               }
+
+
+               $scope.changedate = function () {
+                   $scope.getExamSlotsForAvailabledate();
+               }
+               
+               $scope.onSlotSubmit = function()
+               {
+                   $http.post('/Administrator/ReleaseSlotsForAvailableDate', $scope.availableSeatsForSlot).success(function (data, status) {
+                       $scope.showAddTotalSeatsForSlot = false;
+                       $scope.getReleasedDates();
+                   });
+               }
+
+
+               var tomorrow = new Date();
+               tomorrow.setDate(tomorrow.getDate() + 1);
+               $scope.start = tomorrow;
+               $scope.end = new Date(2020, 5, 22);
+
+               $scope.minStartDate = $scope.start; //fixed date
+               $scope.maxStartDate = $scope.end; //init value
+               $scope.minEndDate = $scope.start; //init value
+
+               $scope.$watch('start', function (v) {
+                   $scope.minEndDate = v;
+               });
+               $scope.$watch('end', function (v) {
+                   $scope.maxStartDate = v;
+               });
+               $scope.today = function () {
+                   $scope.AvailableDate = new Date();
+               };
+               $scope.today();
+
+               $scope.clear = function () {
+                   $scope.AvailableDate = null;
+               };
+
+               $scope.inlineOptions = {
+                   customClass: getDayClass,
+                   minDate: new Date(),
+                   showWeeks: true
+               };
+
+               $scope.dateOptions = {
+                   //dateDisabled: disabled,
+                   formatYear: 'yy',
+                   maxDate: new Date(2020, 5, 22),
+                   minDate: new Date(),
+                   startingDay: 1
+               };
+
+               //// Disable weekend selection
+               //function disabled(data) {
+               //    var date = data.date,
+               //      mode = data.mode;
+               //    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+               //}
+
+               //$scope.toggleMin = function () {
+               //    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+               //    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+               //};
+
+               //$scope.toggleMin();
+
+               $scope.open1 = function () {
+                   $scope.popup1.opened = true;
+               };
+
+               $scope.open2 = function () {
+                   $scope.popup2.opened = true;
+               };
+
+               $scope.setDate = function (year, month, day) {
+                   $scope.AvailableDate = new Date(year, month, day);
+               };
+
+               $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+               $scope.format = 'dd/MM/yyyy';
+               $scope.altInputFormats = ['M!/d!/yyyy'];
+
+               $scope.popup1 = {
+                   opened: false
+               };
+
+               $scope.popup2 = {
+                   opened: false
+               };
+
+               var tomorrow = new Date();
+               tomorrow.setDate(tomorrow.getDate() + 1);
+               var afterTomorrow = new Date();
+               afterTomorrow.setDate(tomorrow.getDate() + 1);
+               $scope.events = [
+                 {
+                     date: tomorrow,
+                     status: 'full'
+                 },
+                 {
+                     date: afterTomorrow,
+                     status: 'partially'
+                 }
+               ];
+
+               function getDayClass(data) {
+                   var date = data.date,
+                     mode = data.mode;
+                   if (mode === 'day') {
+                       var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                       for (var i = 0; i < $scope.events.length; i++) {
+                           var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                           if (dayToCheck === currentDay) {
+                               return $scope.events[i].status;
+                           }
+                       }
+                   }
+
+                   return '';
+               }
+           }]);
+
+
+</script>

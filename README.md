@@ -1,1 +1,6 @@
-# TADE_Exam
+
+This website is an exam intended to improve the knowledge of motorway drivers primarly on signs, signals, rules and motorway behaviour. It is an exam portal with objective type questions with time limit for each questions and score is calculated on the basis of response time. 
+The website actaully was made for candidate who appear exam needs to register, and need to login to appear for the exam. And candidate is monitored by online examiner by video monitoring (request a permission to access candidate computer camera ). At the end of the exam, result (pdf format) will send to candidate's registered email id. Also there is a portal for examiner also to login and put their availability also. 
+But currently I took out all authentication, and opened the exam for public to test their driving ability. At the end of the exam, they can see their result on screen itslef and no video monitoring. (The code on github is actual website which uses authentication and video monitoring etc).
+
+Technologies used : ASP.NET MVC, C#, AngularJS, CSS, HTML, JavaScript, SQL Server, entity framework, Visual Studio 2015. 

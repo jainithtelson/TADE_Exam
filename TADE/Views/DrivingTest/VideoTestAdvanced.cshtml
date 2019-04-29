@@ -1,0 +1,184 @@
+﻿
+@{
+    Layout = null;
+  
+}
+
+<!DOCTYPE html>
+
+<html lang="en" @(ViewBag.ngApp != null ? @Html.Raw(" ng-app=\"" + @ViewBag.ngApp + "\"") : "")>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - The Advanced Drivers Exam</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-cookies.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="~/JS/JS.js"></script>
+    <script type="text/javascript" src="~/JS/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="~/JS/angular-tablesort.js"></script>
+    <script type="text/javascript" src="~/JS/moment.min.js"></script>
+    <script type="text/javascript" src="~/JS/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/JS/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/JS/VideoTest.js"></script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-sanitize.js"></script>*@
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="Stylesheet" href="~/css/style.css">
+    <link rel="Stylesheet" href="~/css/override_style.css">
+    <link rel="Stylesheet" href="~/css/daterangepicker.css">
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+
+</head>
+<body id="ObjectiveTest" @(ViewBag.ngController != null ? @Html.Raw(" ng-controller=\"" + @ViewBag.ngController + "\"") : "") oncontextmenu="return false;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <span class="navbar-brand" style="text-align:center;">TADE - Test Part 2 - Video Indicator</span>
+                @*@Html.ActionLink("The Advanced Drivers Exam", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container body-content">
+        <div id="element">
+            <video controls="controls"  id="video-active" 
+                   class="video-active">
+                <source src="@Url.Action("Index","Test")" type="video/mp4" style="width:98%; height:60%" />
+
+            </video>
+            
+            <div id="current">0:00</div>
+            <div id="duration">0:00</div>
+            <div id="clicktimeTemp"></div>
+        </div>
+        <br />
+        <footer>
+            @*<div class="col-md-12" style="vertical-align:bottom;">
+                    &copy;  @DateTime.Now.Year - TADE
+                </div>*@
+
+        </footer>
+    </div>
+
+    <script>
+        
+        $(document).ready(function () {
+            document.getElementById('video-active').play();
+        var mouseClickArr = { };
+        if (window.chrome)
+            $("[type=video\\\/mp4]").each(function () {
+                $(this).attr('src', $(this).attr('src').replace(".mp4", "_c.mp4"));
+            });
+
+        $("#video-active").on(
+          "timeupdate",
+          function(event){
+
+              $("#current").text(this.currentTime);
+              $("#duration").text(this.duration);
+              if (this.currentTime >= this.duration - 1) {
+                  //alert('Thank you for attanding test. Please wait 5 sec to calculate your score.');
+
+                  //$.post('/DrivingTest/CalculateScore/', { mouseClickDict: mouseClickArr, success: function (data) { window.location = "/ExamResults/Index" ; } });
+                  //@*$.ajax({
+                      // edit to add steve's suggestion.
+
+                      url: '@Url.Action("CalculateScore", "DrivingTest")',
+                      type: 'POST',
+                      dataType: 'JSON',
+                      data: mouseClickArr,
+                      success: function (data) {
+                          // your data could be a View or Json or what ever you returned in your action method
+                          // parse your data here
+                          alert(data);
+                      }
+                  });*@
+
+              }
+          });
+        var getProperty = function (propertyName) {
+            return mouseClickArr[propertyName];
+        };
+        var vid = document.getElementById("video-active");
+        vid.onended = function () {
+                alert('Thank you for attanding test. Please wait 5 sec to calculate your score.');
+                var mouseClickArrPost = { };
+                mouseClickArrPost = mouseClickArr;
+               
+            $.ajax({
+                url: '@Url.Action("CalculateScore")',
+                data: { 'mouseClickArr': mouseClickArr },
+                type: "POST",
+                dataType: "json"
+            }).success(function (data, status) {
+                //  window.location = "/DrivingTest/VideoTest";
+                window.location = "/ExamResults/ExamResultWithGrade";
+            });
+        };
+
+
+
+        $('#element').mousedown(function (event) {
+            switch (event.which) {
+                case 1:
+                    myDivObj = document.getElementById("current");
+                  //  alert(myDivObj.innerHTML);
+                    var clicktime = myDivObj.innerHTML;
+                    
+                    mouseClickArr[clicktime] = 'Left';
+                  //  alert(mouseClickArr[clicktime]);
+                    //alert('Left Mouse button pressed.');
+                    break;
+                case 2:
+                    myDivObj = document.getElementById("current");
+                 
+                    var clicktime = myDivObj.innerHTML;
+                    
+                    mouseClickArr[clicktime] = 'Middle';
+                   // alert('Middle Mouse button pressed.');
+                    break;
+                case 3:
+                    myDivObj = document.getElementById("current");
+                   
+                    var clicktime = myDivObj.innerHTML;
+                    
+                    mouseClickArr[clicktime] = 'Right';
+
+                   // alert('Right Mouse button pressed.');
+                    break;
+                default:
+                    myDivObj = document.getElementById("current");
+                    //alert(myDivObj.innerHTML);
+                    var clicktime = myDivObj.innerHTML;
+                   // $("#clicktimeTemp").text(tx);
+                    mouseClickArr[clicktime] = '';
+                  //  alert('You have a strange Mouse!');
+            }
+        });
+    })
+
+    </script>
+</body>
+</html>

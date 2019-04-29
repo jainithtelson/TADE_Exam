@@ -1,0 +1,114 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+.question{
+    background-color:#eee;
+    color:#151569;
+    min-height:300px;
+    text-align:center;
+}
+.option{
+    background-color:#cadaee;
+    font-size:20px;
+    padding:10px;
+    margin:3px;
+}
+.option label{
+    font-weight:normal;
+}
+.form-control-TADE:-moz-placeholder {
+  color: #999999;
+}
+
+.form-control-TADE::-moz-placeholder {
+  color: #999999;
+}
+
+.form-control-TADE:-ms-input-placeholder {
+  color: #999999;
+}
+
+.form-control-TADE::-webkit-input-placeholder {
+  color: #999999;
+}
+
+.form-control-TADE {
+  display: block;
+  
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control-TADE:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.form-control-TADE[disabled],
+.form-control-TADE[readonly],
+fieldset[disabled] .form-control-TADE {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+textarea.form-control-TADE {
+  height: auto;
+}
+.tablewithheader
+{
+    width:80%;
+    border-style:double;
+    margin:5px;
+   
+}
+.tablewithheader thead tr{
+        background-color: bisque;
+    height: 37px;
+    border-bottom-style: solid;
+}
+.tablewithheader thead tr th
+{
+    widht:20%;
+    padding:3px 5px;
+ 
+}
+.tablewithheader tbody tr td
+{
+    widht:20%;
+    padding:3px 5px;
+ 
+}

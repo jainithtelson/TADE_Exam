@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "StartExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<style>
+    .startExamButton {
+        display:block;
+    }
+    .HidestartExamButton{
+        display:none;
+    }
+</style>
+<div class="container text-center">
+    <div class="col-md-12">
+      @if (ViewBag.stratExam == "HidestartExamButton" && ViewBag.EditExamDate == true)
+      {
+        <span> Your booked date is  @Html.Raw(ViewBag.BookedDate) &nbsp;<button class="btn btn-default" onclick="window.location.href='@Url.Action("CandidateExamBookingDetails", "CandidateDetails" )';">change exam date!?</button></span>
+      }  
+    </div>
+    <p class="text-muted credit">@Html.Raw(ViewBag.Message)</p>
+    <br /><br />
+    <div class="col-md-12">
+        <span class="@Html.Raw(ViewBag.stratExam)">  <button class="btn btn-default" onclick="window.location.href='@Url.Action("SetUpVideo", "DrivingTest" )';">Ready for video</button></span>
+        @*<span class="@Html.Raw(ViewBag.stratExam)">  <button class="btn btn-default" onclick="window.location.href='@Url.Action("ObjectiveTestAdvanced", "DrivingTest")';">Ready for exam?</button></span>*@
+    </div>
+</div>
+

@@ -1,0 +1,292 @@
+* {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: small;
+}
+
+#loading {
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    z-index: 10000;
+    width: 100%;
+    text-align: center;
+}
+
+#angularLoading {
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    z-index: 10000;
+    width: 100%;
+    text-align: center;
+}
+
+.tinyMCE {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+}
+
+    .tinyMCE > div {
+        position: fixed;
+        top: 164px;
+        left: 175px;
+        z-index: 10000;
+        width: 680px;
+        height: 545px;
+        text-align: center;
+        margin: auto;
+        background-color: whitesmoke;
+        border: 3px solid blue;
+        padding: 10px;
+    }
+
+    .tinyMCE select.form-control {
+        width: 188px;
+        display: inline-block;
+    }
+
+    .tinyMCE input.form-control {
+        width: 140px;
+        display: inline-block;
+    }
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.white {
+    color: white;
+}
+
+.deimosContentPage {
+    overflow: hidden;
+}
+
+.deimosTitle {
+    margin-top: -20px;
+    margin-left: -45px;
+    margin-right: -45px;
+    margin-bottom: 20px;
+    height: 30px;
+    background: url('../../Images/RootItemBkg.gif');
+    border-bottom: 1px solid #7B9EC6;
+}
+
+    .deimosTitle h1 {
+        text-align: center;
+        padding: 9px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+.deimosTable > thead {
+    background-color: #7B9EC6;
+    background: url('../../Images/RootItemBkg.gif');
+    font-weight: bold;
+}
+.TADELetter {
+    background:url(/Images/TADELetter.png);
+    background-size: 100% 100%;
+    padding:0 !important;
+    margin:0 !important;
+}
+    .deimosTable > thead > tr > th {
+        white-space: nowrap;
+        padding-right: 20px !important;
+    }
+
+.deimosTable > tbody > tr {
+}
+
+    .deimosTable > tbody > tr.EditRow {
+        border: solid;
+        border-color: blue;
+    }
+
+    .deimosTable > tbody > tr > td.DisplayText {
+        width: 100%;
+    }
+
+        .deimosTable > tbody > tr > td.DisplayText > textarea {
+            border: none;
+            width: 100%;
+            background-color: transparent;
+        }
+
+.EditText {
+    width: 100%;
+    height: 85%;
+}
+
+table.tablesorter > thead > tr > th.header {
+    background-image: url(../../Images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+}
+
+table.tablesorter > thead > tr > th.headerSortUp {
+    background-image: url(../../Images/asc.gif);
+}
+
+table.tablesorter > thead > tr > th.headerSortDown {
+    background-image: url(../../Images/desc.gif);
+}
+
+th.tablesort-sortable {
+    background-image: url(../../Images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+th.tablesort-asc {
+    background-image: url(../../Images/asc.gif);
+}
+
+th.tablesort-desc {
+    background-image: url(../../Images/desc.gif);
+}
+
+/*
+ * Styling for the table row shown in empty tables
+ */
+
+/* The row is always added as the first row in a table
+   Hide it by default */
+.showIfLast {
+    display: none;
+}
+
+    /* Only show it if it is also the last row of the table. */
+    .showIfLast:last-child {
+        display: table-row;
+    }
+
+    .showIfLast td {
+        text-align: center;
+    }
+
+        .showIfLast td:after {
+            content: "No data";
+        }
+
+.noWrapColumn {
+    white-space: nowrap;
+}
+
+.clickableRow {
+    cursor: pointer;
+}
+
+.valueCell {
+    font-weight: bold;
+}
+
+.magicHiddenThing {
+    border: 0px;
+    padding: 0px;
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    display: block;
+}
+
+.DateRangeSelector {
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.actionImageIcon {
+    background-repeat: no-repeat;
+    background-position: 24px;
+}
+
+.xxx {
+    -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+    -moz-box-sizing: border-box; /* FF1+ */
+    box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
+.ImageLink > img {
+    border: 0;
+}
+
+.left-align {
+    text-align: left !important;
+    width: 100%;
+}
+
+.UkKeralaCategory {
+    font-size: 23px;
+    color: firebrick;
+}
+.navbar-inverse {
+    background-color: #1d4877; 
+    border-color: #1d4877; 
+    background-image: linear-gradient(to bottom,#1d4877 0,#8fa9ba 100%);
+}
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+    font-size:29px;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #ffffff;
+
+}
+.UKKeralaSearchBanner {
+        padding-top: 10px;
+    padding-bottom: 5px;
+    background-color: aliceblue;
+    margin-bottom: 10px;
+}
+.TADEHeading{
+        text-align: left;
+    font-size: 22px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.TADEContent{
+        text-align: left;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+    .TADEContent ul li {
+        font-size:18px !important;
+    }
+    .TADEform-control {
+  /*display: block;*/
+  width: 90%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}

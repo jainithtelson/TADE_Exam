@@ -1,0 +1,288 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@using TADE;
+@using CaptchaMvc; 
+@model TADE.Models.CandidateDetail
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div id="tadeform" class="form-horizontal">
+        <h4>
+        Employer Registration Form:</h4>
+        <hr />
+        <!-- progressbar -->
+        <ul id="progressbar">
+            <li class="active">Account Setup</li>
+            <li>Personal Details</li>
+            <li>Final step</li>
+        </ul>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <label style="font-weight: normal;">(*  Mandatory)</label>
+
+        <fieldset>
+            <h2 class="fs-title">Create your account</h2>
+            <h3 class="fs-subtitle"></h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, "Email *", htmlAttributes: new { @class = "control-label col-md-2", title = "Test tool tip" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Email is used for login and view candidate details." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.Email)</div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, "Password *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+
+                    @Html.PasswordFor(model => model.Password, new { @class = "TADEform-control" })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Please remember your password for future reference to login." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.Password)</div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, "First Name *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="First name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.FirstName)</div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MiddleName, "Middle Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Middle name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, "Last Name *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Last name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.LastName)</div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfBirth, "Date Of Birth *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(model => model.Day, Enumerable.Range(1, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Day")
+                    @Html.ValidationMessageFor(model => model.Day)
+                    @Html.DropDownListFor(model => model.Month, Enumerable.Range(1, 12).Select(i => new SelectListItem { Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i) }), "Month")
+                    @Html.ValidationMessageFor(model => model.Month)
+                    @Html.DropDownListFor(model => model.Year, Enumerable.Range(DateTime.Now.Year - 100, 100 - 17).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Year")
+                    @Html.ValidationMessageFor(model => model.Year)
+
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="DOB should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+
+                </div>
+            </div>
+            <input type="button" name="next" class="next action-button" value="Next" />
+        </fieldset>
+
+
+        <fieldset>
+            <h2 class="fs-title">Personal Details</h2>
+            <h3 class="fs-subtitle"></h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, "Phone *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "TADEform-control" } })
+
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="We will contact you either by phone or email." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.Phone)</div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine1, "Address Line1 *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "TADEform-control" } })
+
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.AddressLine1)</div>
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine2, "Address Line2 *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine3, "Address Line3", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.AddressLine3, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PostCode, "Post Code (Format:AB12CD) *", htmlAttributes: new { @style = "padding-right: 0px;", @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Postcode should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.PostCode)</div>
+
+
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next" />
+        </fieldset>
+       
+
+
+        <fieldset>
+            <h2 class="fs-title">Final step</h2>
+            <h3 class="fs-subtitle"></h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DrivingLicenseNumber, "Driving License Number *", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.DrivingLicenseNumber, new { htmlAttributes = new { @class = "TADEform-control" } })
+                    <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Driving license number should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.DrivingLicenseNumber)</div>
+
+
+                </div>
+            </div>
+
+           
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                    @*@Html.MathCaptcha()*@
+
+                    @Html.Captcha(4)
+                    <br />
+                    <p class="Error">  @ViewBag.ErrMessage </p>
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="submit" value="Register" class="submit action-button" />
+            @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                   
+                </div>
+            </div>*@
+          
+            @*<input type="submit" name="submit" class="submit action-button" value="Submit" />*@
+        </fieldset>
+       
+    </div>
+}
+ <!-- jQuery -->
+<script src="~/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<!-- jQuery easing plugin -->
+<script src="~/JS/jquery.easing.min.js" type="text/javascript"></script>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    //jQuery time
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
+
+    $(".next").click(function () {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50) + "%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                next_fs.css({ 'left': left, 'opacity': opacity });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function () {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();
+
+        //de-activate current step on progressbar
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale previous_fs from 80% to 100%
+                scale = 0.8 + (1 - now) * 0.2;
+                //2. take current_fs to the right(50%) - from 0%
+                left = ((1 - now) * 50) + "%";
+                //3. increase opacity of previous_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({ 'left': left });
+                previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    //$(".submit").click(function () {
+    //    return false;
+    //})
+});
+</script>

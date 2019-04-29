@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "HomeController";
+}
+<div class="col-md-12">
+    <div class="TADEHeading col-md-12">
+       
+    </div>
+    <div class="TADEContent col-md-12">
+        
+    </div>
+    
+    <div class="col-md-12">
+        <input type="button" value="Do you need someone to do your work?" class="btn btn-default" style="font-size: 25px !important;" onclick="window.location.href='@Url.Action("Login", "Account" )';" />
+        <input type="button" value="Are you looking for a work to do?" class="btn btn-default" style="margin-left:50px; font-size: 25px !important;" onclick="window.location.href='@Url.Action("Login", "Account" )';" />
+    </div>
+
+</div>
+@*<div class="col-md-2">
+    <div style="padding-bottom:50px;">
+        <h3 style="color: hsl(282, 81%, 54%) !important;
+font-size:17px !important;">
+            Motorway Accident Histories
+        </h3>
+        <marquee direction="up" onmouseover="this.stop()" onmouseout="this.start()"
+                 scrolldelay="500">
+            <table>
+              
+            
+                <tr ng-repeat="ln in LatestNews" ng-click="latestNewsReadByScreenshot(ln.NewsScreenshotPath)">
+                    <td style="padding-top:5px;padding-bottom:5px;">
+                        <strong>
+                            <label style="color: #337ab7;">{{ln.Title}}</label>
+                          
+                        </strong>
+                    </td>
+                </tr>
+
+            </table>
+        
+        </marquee>
+    </div>
+    <hr style="border-top: 3px solid #eee;" />
+    <div style="padding-bottom:50px;">
+        <h3 style="color: hsl(282, 81%, 54%) !important;
+font-size:17px !important;">
+            Testimonials
+        </h3>
+        <marquee direction="up" onmouseover="this.stop()" onmouseout="this.start()"
+                 scrolldelay="500">
+            <table>
+                <tr ng-repeat="t in Testimonials" ng-click="testimonialClick()">
+                    <td style="padding-top:5px;padding-bottom:5px;">
+                        <strong>
+                            <label style="color: #337ab7;">{{t.Title}}</label>
+                          
+                        </strong>
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+        </marquee>
+    </div>
+</div>*@
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.LatestNews = [];
+           $scope.Testimonials = [];
+           $scope.getLatestNews = function () {
+               var req = {
+                   method: 'POST', url: '/Home/GetLatestNews',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.LatestNews = response.data;
+
+                   }, function (response) {
+
+                   });
+           }
+           $scope.getTestimonials = function () {
+               $scope.Test = 'test angular';
+
+               var req = {
+                   method: 'POST', url: '/Home/GetTestimonials',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.Testimonials = response.data;
+
+                   }, function (response) {
+
+                   });
+           }
+           $scope.testimonialClick = function () {
+               window.location = "/Testimonials/Index";
+           }
+           $scope.latestNewsClick = function (NewsId) {
+               window.location = "/LatestNews/Details/" + NewsId;
+               // window.location = "/LatestNews/OpenWordDocumentLatestNews";
+           }
+           $scope.latestNewsReadByScreenshot = function (NewsScreenshotPath) {
+               window.location = "/LatestNews/OpenWordDocumentLatestNews/?NewsScreenshotPath=" + NewsScreenshotPath;
+           }
+           $scope.getTestimonials();
+           $scope.getLatestNews();
+       }]);
+
+
+</script>

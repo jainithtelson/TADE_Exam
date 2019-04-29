@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "StartVideoIndicatorTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<div class="container text-center">
+    <p class="text-muted credit">
+       Thank you for attending objective type exam. Next level is Video indicator
+        <h2>Are you ready to start exam? </h2>
+    </p>
+    <div class="col-md-12">
+        @*<button class="btn btn-default" onclick="openVIWindow();">Start Test</button>*@
+        <input type="button" value="Start Video Test" class="btn btn-default" onclick="location.href='@Url.Action("VideoTestAdvanced", "DrivingTest")'" />
+    </div>
+</div>
+@*<script>
+    function openVIWindow() {
+        var params = [
+    'height=' + screen.height,
+    'width=' + screen.width,
+    'fullscreen=yes' // only works in IE, but here for completeness
+        ].join(',');
+        var browser = navigator.appName;
+        if (browser == "Microsoft Internet Explorer") {
+            window.opener = self;
+
+        }
+        window.open('@Url.Action("VideoTestAdvanced", "DrivingTest")', 'null', params,
+        'toolbar=no', 'scrollbars=no', 'location=no', 'resizable =yes');
+        window.moveTo(0, 0);
+        window.resizeTo(screen.width, screen.height - 100);
+        self.close();
+
+    }
+</script>*@
+

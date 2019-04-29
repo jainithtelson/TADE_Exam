@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" @(ViewBag.ngApp != null ? @Html.Raw(" ng-app=\"" + @ViewBag.ngApp + "\"") : "")>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - The Advanced Drivers Exam</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-animate.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-cookies.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="~/JS/JS.js"></script>
+    <script type="text/javascript" src="~/JS/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="~/JS/angular-tablesort.js"></script>
+    <script type="text/javascript" src="~/JS/moment.min.js"></script>
+    <script type="text/javascript" src="~/JS/daterangepicker.js"></script>
+    <script type="text/javascript" src="~/JS/tinymce.min.js"></script>
+    <script type="text/javascript" src="~/JS/VideoTest.js"></script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-sanitize.js"></script>*@
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="Stylesheet" href="~/css/style.css">
+    <link rel="Stylesheet" href="~/css/override_style.css">
+    <link rel="Stylesheet" href="~/css/daterangepicker.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.1.4.js"></script>
+    
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/Registration.css" />
+    <link rel="stylesheet" href="~/css/jquery.cookiebar.css" />
+    <script type="text/javascript" src="~/JS/jquery.cookiebar.js"></script>
+    <script type="text/javascript">
+
+  $(document).ready(function(){
+     $.cookieBar();
+  });
+    </script>
+</head>
+<body @(ViewBag.ngController != null ? @Html.Raw(" ng-controller=\"" + @ViewBag.ngController + "\"") : "") oncontextmenu="return false;">
+    <div id="fb-root"></div>
+    <script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                @Html.ActionLink("TJTT", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*<a class="navbar-brand" href="/" style="width:370px !important; background-image:url(/Images/TJTTLogo.png); background-repeat:no-repeat;background-size:100%;"></a>*@
+                @*<input type="button" value="TJTT" class="btn btn-default" style="margin: 0;font-size: 29px !important; color: white; background-color: transparent; height: 100%; padding: 1%; " onclick="window.location.href='@Url.Action("Index", "Home" )';" />*@
+            </div>
+           
+            <div class="navbar-collapse collapse">
+                @*@Html.ActionLink("Donate Us", "DonateUs", "Payment", new { area = "" }, new { @class = "navbar-brand" })*@
+               
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+       
+    </div>
+    <div>
+        <footer>
+
+            <hr />
+            <br />
+            <div class="col-md-12" style="margin-top:10px; color:orange;">
+                &copy;  @DateTime.Now.Year - TJTT
+            </div>
+
+        </footer>
+    </div>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    </body>
+</html>
+
+

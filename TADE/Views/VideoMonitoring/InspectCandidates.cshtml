@@ -1,0 +1,523 @@
+﻿@model TADE.Models.CandidateVerification
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="TADE">
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/cupertino/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    @*<link rel="Stylesheet" href="~/css/style.css">
+    <link rel="Stylesheet" href="~/css/override_style.css">*@
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>VideoConferenceBeta</title>
+    <style>
+        audio,
+        video {
+            -moz-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -webkit-transition: all 1s ease;
+            transition: all 1s ease;
+            vertical-align: top;
+            width: 35%;
+        }
+
+        /*input {
+            border: 1px solid #d9d9d9;
+            border-radius: 1px;
+            font-size: 2em;
+            margin: .2em;
+            width: 30%;
+        }*/
+
+        .setup {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            font-size: 102%;
+            height: 47px;
+            margin-left: -9px;
+            margin-top: 8px;
+            position: absolute;
+        }
+
+        p {
+            padding: 1em;
+        }
+
+        li {
+            border-bottom: 1px solid rgb(189, 189, 189);
+            border-left: 1px solid rgb(189, 189, 189);
+            padding: .5em;
+        }
+
+        .video-div {
+            border-radius: 5px;
+            border: 1px solid black;
+            margin: 0 5px;
+            width: 320px;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+            .video-div video {
+                width: 320px;
+            }
+
+            .video-div h2 {
+                border-top: 5px solid #080808;
+                padding: 5px 10px;
+                margin: 0;
+                margin-top: -4px;
+                overflow: hidden;
+            }
+
+        #videos-container {
+            text-align: center;
+        }
+    </style>
+    <script src="~/JS/firebase.js">
+    </script>
+    <script src="~/JS/RTCMultiConnection.js">
+    </script>
+</head>
+<body>
+   
+        
+@if (ViewBag.Visibility != null)
+{
+    if (ViewBag.Visibility)
+    {
+        <div class="col-md-12"><label style="margin-right:5px;">Hello</label>  <label id="candName">@(ViewBag.CandName)</label><label id="candId" style="display:none">@(ViewBag.CandID)</label></div>
+        <div class="col-md-12"><div class="col-md-2"><input type="text" id="broadcast-name" disabled value="@(ViewBag.RoomName)"></div><div class="col-md-10"><button id="setup-new-broadcast" class="btn btn-default">Ready for video monitoring</button></div>
+            </div>
+          
+
+
+            }
+            else
+            {
+        <div class="col-md-12">
+            <label style="margin-right:5px;">Hello</label>  <label id="candName">@(ViewBag.CandName)</label><label id="candId" style="display:none">@(ViewBag.CandID)</label>
+        </div>
+        <div class="col-md-12"><input type="hidden" id="broadcast-name" disabled value="@(ViewBag.RoomName)" style="width:0px;height:0px;overflow:hidden">
+<div id="setup-new-broadcast" class="setup" value="Start Test" style="width:0px;height:0px;overflow:hidden"></div></div>
+           
+
+            <div class="col-md-12">
+                <span class="@ViewBag.stratExam">  <button style="display:none" class="btn btn-default" id="startExam"></button></span>
+            </div>
+            }
+            }
+            else
+            {
+            <table>
+                <tr>
+                    <td><label style="margin-right:5px;">Hello</label>  <label id="candName">@(ViewBag.CandName)</label><label id="candId" style="display:none">@(ViewBag.CandID)</label></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" id="broadcast-name" disabled value="@(ViewBag.RoomName)" style="width:0px;height:0px;overflow:hidden">
+                        <div id="setup-new-broadcast" class="setup" value="Start Test" style="width:0px;height:0px;overflow:hidden"></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="col-md-12">
+                <span class="@ViewBag.stratExam">  <button style="display:none" class="btn btn-default" id="startExam"></button></span>
+            </div>
+            }
+
+
+
+
+            <!-- list of all available broadcasting rooms -->
+            <table style="width: 100%;" id="rooms-list"></table>
+
+            <!-- local/remote videos container -->
+            <div id="videos-container"></div>
+
+
+
+
+
+
+            <script>
+                // var timeoutId;
+                $(document).ready(function () {
+                    // timeoutId = window.setTimeout(AskToShow, 1000);
+                    $("#dialog").dialog({
+                        autoOpen: false
+                        ////,show: {
+                        ////  effect: "blind",
+                        ////  duration: 1000
+                        ////},
+                        ////hide: {
+                        ////  effect: "explode",
+                        ////  duration: 1000
+                        ////}
+                    });
+                    function openWindow() {
+
+
+                    }
+                    //$("#opener").on("click", function () {
+                    //    $("#dialog").dialog("open");
+                    //});
+
+                    $("#startExam").click(function () {
+                       // alert('test open');
+                        //document.getElementById('videos-container').style.top="0px";
+                        var params = [
+                  'height=' + screen.height,
+                  'width=' + screen.width,
+                  'fullscreen=yes' // only works in IE, but here for completeness
+                        ].join(',');
+                        var browser = navigator.appName;
+                        if (browser == "Microsoft Internet Explorer") {
+                            window.opener = self;
+
+                        }
+                        window.open('@Url.Action("ObjectiveTestAdvancedPrep", "DrivingTest")', 'null', params,
+                              'toolbar=no', 'scrollbars=no', 'location=no', 'resizable =no');
+                        window.moveTo(0, 0);
+                        //window.resizeTo(screen.width, screen.height - 100);
+                        self.close();
+                    });
+                    $("#btnAsk").click(function () {
+                        alert("button");
+                        AskToShow();
+                    });
+                    function AskToShow() {
+                        //CandidateVerificationPartial
+                        // '@ViewBag.Visibility' = true;
+                        $("#candidateVerificationDiv").load('@Url.Action("CandidateVerificationPartial", "VideoMonitoring", new { message="Please show your photo" })');
+
+                        var message = "Please show your photo";
+
+                        @*$.ajax({
+                    url: '@Url.Action("CandidateVerificationPartial", "VideoMonitoring")',
+                    data: {
+                        message: message
+                    },
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        alert('data');
+                        $('#candidateVerificationDiv').load(data);
+                    }
+                });*@
+
+
+                        // document.getElementById('itemsToShow').innerHTML = "Please show your photo";
+                    }
+                    function openCandidateVerification(candId) {
+                        //alert(candId);
+                        //document.getElementById("lblCandId").innerHTML = candId;
+                        var JsVisibility = '@ViewBag.Visibility'
+                        // alert(JsVisibility);
+                        var buttonId = "verifyButton" + candId;
+
+                        var url = '@Url.Action("CandidateDetailVerification", "VideoMonitoring")?candId=' + candId;
+                        //var url = "http://localhost:50466/VideoMonitoring/CandidateDetailVerification/?candId=" + candId;
+                        var dialog = $('<div id="verdialog" style="display:none;"></div>').appendTo('body');
+                        dialog.load(url, {},
+                            function (responseText, textStatus, XMLHttpRequest) {
+                                dialog.dialog({
+                                    position: { my: "left:100%", at: "left:100%", of: document.getElementById(buttonId) },
+                                    close: function (event, ui) {
+                                        dialog.remove();
+                                    }
+                                });
+                            });
+                        return false;
+                        //if (JsVisibility == 'True') {
+
+                        //    document.getElementById('CandidateId').value = candId;
+                        //    $("#dialog").dialog("open");
+                        //}
+
+
+
+                    }
+                    //openCandidateWarning
+                    function openCandidateWarning(candId) {
+                        var JsVisibility = '@ViewBag.Visibility'
+                        // alert(JsVisibility);
+                       // var buttonId = "verifyButton" + candId;
+
+                        var url = '@Url.Action("ObjectiveTestAdvanced", "DrivingTest")?candidateId=' + candId;
+                        var params = [
+'height=' + screen.height,
+'width=' + screen.width,
+'fullscreen=yes' // only works in IE, but here for completeness
+                        ].join(',');
+                        var browser = navigator.appName;
+                        if (browser == "Microsoft Internet Explorer") {
+                            window.opener = self;
+
+                        }
+                        window.open(url, 'null', params,
+                              'toolbar=yes', 'scrollbars=no', 'location=no', 'resizable =no');
+                        window.moveTo(0, 0);
+                        //window.resizeTo(screen.width, screen.height - 100);
+                        self.close();
+                    }
+
+                    var JsVisibility = '@ViewBag.Visibility'
+                    if (JsVisibility != 'true') {
+                        // findButtonbyTextContent('Verification');
+                        // VerificationButton.style = 'width:0px;height:0px;overflow:hidden';
+                    }
+                    function findButtonbyTextContent(text) {
+                        var buttons = document.querySelectorAll('button');
+                        for (var i = 0, l = buttons.length; i < l; i++) {
+                            if (buttons[i].firstChild.nodeValue == text) {
+                                //  buttons[i].style = 'width:0px;height:0px;overflow:hidden';
+                            }
+                            // return buttons[i];
+                        }
+                    }
+
+
+
+
+
+
+                    var connection = new RTCMultiConnection();
+
+
+
+                    connection.extra = {
+                        // CandidateName: prompt('Cand NAme')
+                        CandidateName: document.getElementById("candName").innerHTML,
+                        candId: document.getElementById("candId").innerHTML,
+                        backCamera: '@ViewBag.BackCamera'
+                    };
+                    connection.session = {
+                        audio: true,
+                        video: true,
+                        broadcast: true
+                    };
+
+                    connection.onstream = function (event) {
+                        ////e.mediaElement.width = 600;
+                        ////videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
+                        //rotateVideo(e.mediaElement);
+                        //scaleVideos();
+
+                        delete event.mediaElement.id; // make sure that below DIV has unique ID in the DOM
+                      //  var BackCamera = '@ViewBag.BackCamera';
+                        
+                       // if (BackCamera == 'True' || BackCamera == 'true') {
+                            
+                            
+                            //var backCameraDiv = document.getElementById("backCamera" + event.extra.candId);
+                            //backCameraDiv.appendChild(event.mediaElement);
+                            //videosContainer.appendChild(backCameraDiv);
+                            //rotateVideo(event.mediaElement);
+                            //scaleVideos();
+                       // }
+                        
+                            var div = document.createElement('div');
+                            div.id = event.streamid;
+                            div.className = 'video-div';
+                            if (event.extra.backCamera == 'True' || event.extra.backCamera == 'true')
+                            {
+                                var h2 = document.createElement('h2');
+                        h2.innerHTML = "Back Camera";
+                        div.appendChild(h2);
+                            }
+
+
+                            div.appendChild(event.mediaElement); // appending VIDOE to DIV
+
+                            var h2 = document.createElement('h2');
+                            h2.innerHTML = event.extra.CandidateName;
+                            div.appendChild(h2);
+
+                            if (event.extra.backCamera != 'True') {
+                                var button = document.createElement('button');
+                                button.id = "verifyButton" + event.extra.candId;
+                                button.addEventListener('click', function () {
+                                    openCandidateVerification(event.extra.candId);
+                                });
+
+                                button.innerHTML = "Verification";
+                                var JsVisibility = '@ViewBag.Visibility'
+                                if (JsVisibility != 'true') {
+                                    // button.style = 'width:0px;height:0px;overflow:hidden';
+                                }
+
+                                div.appendChild(button);
+
+                                //Add warning message button
+
+                                var buttonWarning = document.createElement('button');
+                                buttonWarning.id = "warningButton" + event.extra.candId;
+                                buttonWarning.addEventListener('click', function () {
+                                    openCandidateWarning(event.extra.candId);
+                                });
+
+                                buttonWarning.innerHTML = "Warning";
+                                var JsVisibility = '@ViewBag.Visibility'
+                                if (JsVisibility == 'false' || JsVisibility == 'False') {
+                                    buttonWarning.style = 'display:none;width:0px;height:0px;overflow:hidden';
+                                }
+
+
+                                div.appendChild(buttonWarning);
+
+                            }
+                           
+
+                            ////Add backCamera Div
+
+                            //var backcameraDiv = document.createElement('div');
+                            //backcameraDiv.id = "backCamera" + event.extra.candId;
+
+                            //div.appendChild(backcameraDiv);
+
+                            //********** End warning message button *************
+
+                            // div.style.backgroundColor = event.extra.divBGColor;
+
+                            videosContainer.appendChild(div);
+                            rotateVideo(event.mediaElement);
+                            scaleVideos();
+                       
+                    };
+
+                    //connection.onmessage = appendDIV;
+                    function rotateVideo(mediaElement) {
+                        mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
+                        setTimeout(function () {
+                            mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
+                        }, 1000);
+                    }
+
+                    connection.onstreamended = function (e) {
+                        e.mediaElement.style.opacity = 0;
+                        rotateVideo(e.mediaElement);
+                        setTimeout(function () {
+                            if (e.mediaElement.parentNode) {
+                                e.mediaElement.parentNode.removeChild(e.mediaElement);
+                            }
+                            scaleVideos();
+                        }, 1000);
+                    };
+
+                    var sessions = {};
+                    connection.onNewSession = function (session) {
+                        if (sessions[session.sessionid]) return;
+                        sessions[session.sessionid] = session;
+
+                        var tr = document.createElement('div');
+                        //tr.innerHTML = '<td><strong>' + session.sessionid + '</strong> is an active room.</td>' +
+                        //    '<td><button class="join">Click here to start your camera</button></td>';
+
+                        tr.innerHTML = ' <div class="col-md-12" id="startCamera"><div class="col-md-3"><strong>You examiner is ready for verificcation </strong> </div>' +
+                            '<div class="col-md-9"><button class="join btn btn-default">Click here to start your camera</button></div></div>';
+                        roomsList.insertBefore(tr, roomsList.firstChild);
+
+                        var joinRoomButton = tr.querySelector('.join');
+                        joinRoomButton.setAttribute('data-sessionid', session.sessionid);
+                        joinRoomButton.onclick = function () {
+                            this.disabled = true;
+
+                            var sessionid = this.getAttribute('data-sessionid');
+                            session = sessions[sessionid];
+
+                            if (!session) throw 'No such session exists.';
+
+                            connection.join(session);
+                            document.getElementById('startCamera').style = "display:none";
+                            var verifyclickMsg = document.createElement('div');
+                            verifyclickMsg.innerHTML = '<div class="col-md-12"><br /><label id="lblverifyMsg">please click the verification button</label></div>';
+                            roomsList.insertBefore(verifyclickMsg, tr);
+                        };
+                    };
+
+                    var videosContainer = document.getElementById('videos-container') || document.body;
+                    var roomsList = document.getElementById('rooms-list');
+
+                    document.getElementById('setup-new-broadcast').onclick = function () {
+                        this.disabled = true;
+
+                        connection.dontCaptureUserMedia = true;
+                        connection.sdpConstraints.mandatory = {
+                            OfferToReceiveAudio: true,
+                            OfferToReceiveVideo: true
+                        };
+
+                        connection.open(document.getElementById('broadcast-name').value || 'Anonymous');
+                    };
+
+                    connection.dontCaptureUserMedia = false;
+                    connection.sdpConstraints.mandatory = {
+                        OfferToReceiveAudio: false,
+                        OfferToReceiveVideo: false
+                    };
+
+                    // setup signaling to search existing sessions
+                    connection.connect();
+
+                    (function () {
+                        var uniqueToken = document.getElementById('unique-token');
+                        if (uniqueToken)
+                            if (location.hash.length > 2) uniqueToken.parentNode.parentNode.parentNode.innerHTML = '<h2 style="text-align:center;"><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
+                            else uniqueToken.innerHTML = uniqueToken.parentNode.parentNode.href = '#' + (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace(/\./g, '-');
+                    })();
+
+                    function scaleVideos() {
+                        var videos = document.querySelectorAll('video'),
+                            length = videos.length,
+                            video;
+
+                        var minus = 130;
+                        var windowHeight = 700;
+                        var windowWidth = 600;
+                        var windowAspectRatio = windowWidth / windowHeight;
+                        var videoAspectRatio = 4 / 3;
+                        var blockAspectRatio;
+                        var tempVideoWidth = 0;
+                        var maxVideoWidth = 0;
+
+                        for (var i = length; i > 0; i--) {
+                            blockAspectRatio = i * videoAspectRatio / Math.ceil(length / i);
+                            if (blockAspectRatio <= windowAspectRatio) {
+                                tempVideoWidth = videoAspectRatio * windowHeight / Math.ceil(length / i);
+                            } else {
+                                tempVideoWidth = windowWidth / i;
+                            }
+                            if (tempVideoWidth > maxVideoWidth)
+                                maxVideoWidth = tempVideoWidth;
+                        }
+                        for (var i = 0; i < length; i++) {
+                            video = videos[i];
+                            if (video)
+                                video.width = maxVideoWidth - minus;
+                        }
+                    }
+
+                    window.onresize = scaleVideos;
+                });
+            </script>
+</body>
+</html>

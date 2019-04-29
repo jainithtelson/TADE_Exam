@@ -1,0 +1,312 @@
+﻿
+@{
+    ViewBag.BookedDate = "CandidateExamBookingDetails";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "CandidateExamBookingDetailsController";
+}
+
+
+
+
+
+<div>
+    <style>
+        .full button span {
+            background-color: limegreen;
+            border-radius: 32px;
+            color: black;
+        }
+
+        .partially button span {
+            background-color: orange;
+            border-radius: 32px;
+            color: black;
+        }
+    </style>
+    @*<div>An email has been sent to your email address given with password. You can use the email address and password to log in to your account. </div>*@
+    <h4>Book Exam</h4>
+    <div ng-show="showAddDate">
+        <form novalidate name="candidateExamSlotsForm" ng-submit="saveExamDateAndTime(slotsdetails)">
+            <div style="color:red">{{message}}</div>
+            <hr />
+            <div>
+                <div>
+                    <input type="hidden" ng-bind="{{slotsdetails.BookingId}}" id="bookingId" value="{{slotsdetails.BookingId}}" />
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <label class="control-label left-align" for="txtBookedDate">
+                                Select your preferred date for exam:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="slotsdetails.BookedDate" ng-change="OnDateChange()"
+                                       value="{{slotsdetails.BookedDate | date: 'dd/MM/yyyy'}}" is-open="popup1.opened"
+                                       min="minStartDate" max="maxStartDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <label class="control-label left-align" for="SlotsLists">
+                                Time:
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            @*<input id="txtcategoryList" type="text" class="form-control input-md" ng-bind="{{slotsdetails.Categories.CategoryName}}"
+                                required="*" value="{{slotsdetails.Categories.CategoryName}}" ng-disabled="isEdit"
+                                ng-hide="isAdd">*@
+                            <select id="SlotsLists" ng-model="selectedSlot"
+                                    ng-options="ExamSlots.SlotName for ExamSlots in SlotsLists track by ExamSlots.SlotId "
+                                    class="form-control input-md list-group col-md-3">
+                                <option value="" selected="selected">Please select...</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-offset-2 col-md-10">
+                            @*<input type="button" class="btn btn-primary" value="Save" data-ng-click="savecontentManagement(contentManagement)" />*@
+                            <input type="submit" value="Book" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+    <div ng-show="showDisplayBooking">
+        You have successfully booked TADE exam.  Your booked date is {{slotsdetails.BookedDate | date: 'dd/MM/yyyy'}} and time is {{slotsdetails.SlotName}}. 
+        <br />
+        <br />An email has been sent to your email address indicating the time and date of your exam. Please read the instructions received when you have registered for the exam and prepare well for the exam. Wish you all the best <br /><br />
+        <input type="button" class="btn btn-primary" value="Do you want to change date and time? " data-ng-click="EditDate()" style="margin-right:25px;" />
+        <input type="button" class="btn btn-primary" value="Back to home " onclick="window.location.href='@Url.Action("Index", "Home" )';" />
+      
+    </div>
+</div>
+
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.showAddDate = true;
+           $scope.showDisplayBooking = false;
+           $scope.slotsdetails = {
+               BookingId: '',
+               CandidateId: '',
+               BookedDate: '',
+               SlotId: '',
+               SlotName: ''
+           };
+           $scope.selectedSlot = {
+               SlotId: ''
+           };
+           $scope.SlotsLists = [];
+           $scope.OnDateChange = function () {
+               $scope.getSlotsLists();
+           }
+           $scope.EditDate = function()
+           {
+               $scope.showAddDate = true;
+               $scope.showDisplayBooking = false;
+           }
+           $scope.getSlotsLists = function () {
+
+
+               var req = {
+                   method: 'POST', url: '/CandidateDetails/GetSlotsLists',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                   data: { 'AvailableDate': $scope.slotsdetails.BookedDate }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.SlotsLists = response.data;
+
+                   }, function (response) {
+
+                   });
+           }
+           $scope.getslotsdetails = function () {
+
+
+               var req = {
+                   method: 'POST', url: '/CandidateDetails/GetSlotsdetails',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.slotsdetails = response.data;
+
+                       $scope.slotsdetails.BookedDate = new Date(parseInt($scope.slotsdetails.BookedDate.replace("/Date(", "").replace(")/", ""), 10));
+                       //
+                       $scope.getSlotsLists();
+                       $scope.selectedSlot.SlotId = $scope.slotsdetails.SlotId;
+                   }, function (response) {
+
+                   });
+           }
+           $scope.saveExamDateAndTime = function (slotsdetails) {
+               slotsdetails.SlotId = $scope.selectedSlot.SlotId;
+               $scope.slotsdetails = slotsdetails;
+               //alert($scope.slotsdetails.SlotId);
+               //alert($scope.slotsdetails.BookedDate);
+               var req = {
+                   method: 'POST', url: '/CandidateDetails/BookExam',
+                   // headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                   data: { 'candidateExamBookingDetail': $scope.slotsdetails }
+               };
+               $http(req).
+               then(function (response) {
+                   //alert(response.data);
+                   //alert('Thank you choosing TADE exam. Please log in 30 minutes before exam starts to set up camera and blah blah blah...');
+                   $scope.open();
+                   $scope.getslotsdetails();
+                   $scope.showAddDate = false;
+                   $scope.showDisplayBooking = true;
+                   // window.location = "/Home/Index";
+
+               }, function (response) {
+                   //$scope.submitText = "Save";
+                   //window.location = "/contentManagements/ManageContent?userid=" + $scope.UserId;
+               });
+           }
+           var tomorrow = new Date();
+           tomorrow.setDate(tomorrow.getDate() + 1);
+           $scope.start = tomorrow;
+           $scope.end = new Date(2020, 5, 22);
+
+           $scope.minStartDate = $scope.start; //fixed date
+           $scope.maxStartDate = $scope.end; //init value
+           $scope.minEndDate = $scope.start; //init value
+
+           $scope.$watch('start', function (v) {
+               $scope.minEndDate = v;
+           });
+           $scope.$watch('end', function (v) {
+               $scope.maxStartDate = v;
+           });
+           $scope.today = function () {
+               $scope.slotsdetails.BookedDate = new Date();
+           };
+           $scope.today();
+
+           $scope.clear = function () {
+               $scope.slotsdetails.BookedDate = null;
+           };
+
+           $scope.inlineOptions = {
+               customClass: getDayClass,
+               minDate: new Date(),
+               showWeeks: true
+           };
+
+           $scope.dateOptions = {
+               //dateDisabled: disabled,
+               formatYear: 'yy',
+               maxDate: new Date(2020, 5, 22),
+               minDate: new Date(),
+               startingDay: 1
+           };
+
+           //// Disable weekend selection
+           //function disabled(data) {
+           //    var date = data.date,
+           //      mode = data.mode;
+           //    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+           //}
+
+           //$scope.toggleMin = function () {
+           //    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+           //    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+           //};
+
+           //$scope.toggleMin();
+
+           $scope.open1 = function () {
+               $scope.popup1.opened = true;
+           };
+
+           $scope.open2 = function () {
+               $scope.popup2.opened = true;
+           };
+
+           $scope.setDate = function (year, month, day) {
+               $scope.slotsdetails.BookedDate = new Date(year, month, day);
+           };
+
+           $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+           $scope.format = 'dd/MM/yyyy';
+           $scope.altInputFormats = ['M!/d!/yyyy'];
+
+           $scope.popup1 = {
+               opened: false
+           };
+
+           $scope.popup2 = {
+               opened: false
+           };
+
+           var tomorrow = new Date();
+           tomorrow.setDate(tomorrow.getDate() + 1);
+           var afterTomorrow = new Date();
+           afterTomorrow.setDate(tomorrow.getDate() + 1);
+           $scope.events = [
+             {
+                 date: tomorrow,
+                 status: 'full'
+             },
+             {
+                 date: afterTomorrow,
+                 status: 'partially'
+             }
+           ];
+
+           function getDayClass(data) {
+               var date = data.date,
+                 mode = data.mode;
+               if (mode === 'day') {
+                   var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                   for (var i = 0; i < $scope.events.length; i++) {
+                       var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                       if (dayToCheck === currentDay) {
+                           return $scope.events[i].status;
+                       }
+                   }
+               }
+
+               return '';
+           }
+           $scope.open = function () {
+               $scope.showModal = true;
+           };
+
+           $scope.ok = function () {
+               $scope.showModal = false;
+           };
+
+           $scope.cancel = function () {
+               $scope.showModal = false;
+           };
+
+
+           $scope.getslotsdetails();
+
+       }]);
+
+
+
+</script>
+

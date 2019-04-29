@@ -1,0 +1,169 @@
+﻿@model TADE.Models.CandidateDetail
+
+@{
+ViewBag.Title = "Create";
+}
+
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Please fill the form:</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "Valid Email", htmlAttributes: new { @class = "control-label col-md-2", title = "Test tool tip" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+              <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="We send certificate to this email id and you can use this email id as username to login to view your certificate." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.Email)</div>
+
+            </div>
+          
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Please remember your password for future reference to login to view and download your certificate." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.Password)</div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="First name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.FirstName)</div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Middle name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Last name should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.LastName)</div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Day, Enumerable.Range(1, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Day")
+                @Html.ValidationMessageFor(model => model.Day)
+                @Html.DropDownListFor(model => model.Month, Enumerable.Range(1, 12).Select(i => new SelectListItem { Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i) }), "Month")
+                @Html.ValidationMessageFor(model => model.Month)
+                @Html.DropDownListFor(model => model.Year, Enumerable.Range(DateTime.Now.Year - 100, 100-17).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Year")
+                @Html.ValidationMessageFor(model => model.Year)
+               
+                <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="DOB should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                
+
+            </div>
+        </div>
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                
+                <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="We will contact you either by phone or email." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.Phone)</div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressLine1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
+                
+                <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.AddressLine1)</div>
+
+              
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressLine2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressLine3, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AddressLine3, new { htmlAttributes = new { @class = "form-control" } })
+              <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Address should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Postcode should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+                <div class="text-danger">@Html.ValidationMessageFor(model => model.PostCode)</div>
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DrivingLicenseNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DrivingLicenseNumber, new { htmlAttributes = new { @class = "form-control" } })
+               <img src="~/Images/QuestionIcon.png" data-toggle="tooltip" title="Driving license number should be same as drving license. The certificate can be refered by insurance agency to reduce your insurence." />
+               <div class="text-danger">@Html.ValidationMessageFor(model => model.DrivingLicenseNumber)</div>
+
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

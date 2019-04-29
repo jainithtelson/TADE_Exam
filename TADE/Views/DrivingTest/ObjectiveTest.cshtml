@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "ObjectiveTest";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "ObjectiveTestController";
+}
+
+<div>
+    <div ID=countdown></div>
+    <div ng-repeat="q in QuestionList  | startFrom:currentPage*pageSize | limitTo:pageSize">
+        <div class="label label-warning">Question {{currentPage + 1}} of {{numberOfPages()}}.</div>
+        <div class="row">
+            <div class="col-md-12">
+                <table><tr><td width="5px;" style="vertical-align:top;"><div style="font-size:20px;">{{currentPage +1}}.</div> </td><td><div style="font-size:20px;" ng-bind-html="q.Question"></div></td></tr></table>
+                 
+                <div ng-switch on ="q.ImageShow">
+                    <div ng-switch-when="true"><img src="~/QuestionImages/{{q.QuestionImage}}" /></div>
+                    <div ng-switch-default></div>
+                </div> 
+
+            </div>
+        </div>
+        <div class="row text-left options">
+            <div class="col-md-6" ng-repeat="option in q.AnswerOptions">
+                <div class="option">
+                    <label class="" for="{{option.AnswerOptionsID}}">
+                        <input id="{{option.AnswerOptionsID}}" type="checkbox" ng-model="option.Selected" ng-change="onSelect(q, option);" />
+                        {{option.AnswerOptionsDescription}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        Previous
+    </button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        Next
+    </button>
+    <button class="btn btn-default" ng-click="onSubmit();">Submit Quiz</button>
+</div>
+
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.currentPage = 0;
+           $scope.pageSize = 1;
+           $scope.QuestionList = [];
+           $scope.defaultConfig = {
+               'allowBack': true,
+               'allowReview': true,
+               'autoMove': false,  // if true, it will move to next question automatically when answered.
+               'duration': 0,  // indicates the time in which quiz needs to be completed. post that, quiz will be automatically submitted. 0 means unlimited.
+               'pageSize': 1,
+               'requiredAll': false,  // indicates if you must answer all the questions before submitting.
+               'richText': false,
+               'shuffleQuestions': false,
+               'shuffleOptions': false,
+               'showClock': false,
+               'showPager': true,
+               'theme': 'none'
+           };
+          // $scope.ImageShow = false;
+           $scope.getQuestionList = function () {
+
+
+               var req = {
+                   method: 'POST', url: '/DrivingTest/GetQuestions',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.QuestionList = response.data;
+                       
+                   }, function (response) {
+
+                   });
+           }
+           $scope.numberOfPages = function () {
+               return Math.ceil($scope.QuestionList.length / $scope.pageSize);
+           }
+           $scope.onSelect = function (question, option) {
+
+               question.AnswerOptions.forEach(function (element, index, array) {
+
+                   if (element.AnswerOptionsID != option.AnswerOptionsID) {
+                       element.Selected = false;
+                   }
+                   question.Answered = option.AnswerOptionsID;
+               });
+
+               // $.post('/DrivingTest/Submit/', { answers: answers, success: function (data) { window.location = "/DrivingTest/VideoTest"; } });
+               //if ($scope.config.autoMove == true && $scope.currentPage < $scope.totalItems)
+               //    $scope.currentPage++;
+           }
+           $scope.onSubmit = function () {
+               var answers = [];
+               //alert('test');
+               //$scope.QuestionList.forEach(function (q, index) {
+               //    alert(q.ObjectiveTestID);
+               //    alert(q.Answered);
+               //    answers.push({ 'QuestionId': q.ObjectiveTestID, 'Answered': q.Answered });
+               //});
+               //alert('test');
+               // Post your data to the server here. answers contains the questionId and the users' answer.
+               //  $.post('/DrivingTest/Submit/', {answers: QuestionList, success: function (data) { window.location = "/DrivingTest/VideoTest"; } });
+               $http.post('/DrivingTest/Submit', $scope.QuestionList).success(function (data, status) {
+                   //  window.location = "/DrivingTest/VideoTest";
+                   window.location = "/ExamResults/Index";
+               });
+               console.log($scope.questions);
+               //$scope.mode = 'result';
+           }
+           var dt = '@ViewBag.EndDate';
+           var dateAr = dt.split('-');
+           var newDate = dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2];
+
+           var end = new Date(dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2]);
+
+           var _second = 1000;
+           var _minute = _second * 60;
+           var _hour = _minute * 60;
+           var _day = _hour * 24;
+           $scope.timer = 0;
+
+           $scope.showRemaining = function () {
+               var now = new Date();
+               var distance = end - now;
+               if (distance < 0) {
+                   clearInterval(timer);
+                   document.getElementById('countdown').innerHTML = 'EXPIRED!';
+                   window.location.href = '/Home/Index';
+
+                   return;
+               }
+               var days = Math.floor(distance / _day);
+               var hours = Math.floor((distance % _day) / _hour);
+               var minutes = Math.floor((distance % _hour) / _minute);
+               var seconds = Math.floor((distance % _minute) / _second);
+
+
+               document.getElementById('countdown').innerHTML = hours + 'hrs ';
+               document.getElementById('countdown').innerHTML += minutes + 'mins ';
+               document.getElementById('countdown').innerHTML += seconds + 'secs';
+           }
+
+           $scope.timer = setInterval($scope.showRemaining(), 1000);
+           $scope.getQuestionList();
+       }]);
+
+    //We already have a limitTo filter built-in to angular,
+    //let's make a startFrom filter
+    app.filter('startFrom', function () {
+        return function (input, start) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+    });
+
+</script>
+

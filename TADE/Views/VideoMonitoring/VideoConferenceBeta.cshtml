@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="TADE">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <title>VideoConferenceBeta</title>
+    <style>
+        audio, video {
+            -moz-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -webkit-transition: all 1s ease;
+            transition: all 1s ease;
+            vertical-align: top;
+            width: 45%;
+        }
+
+        input {
+            border: 1px solid #d9d9d9;
+            border-radius: 1px;
+            font-size: 2em;
+            margin: .2em;
+            width: 70%;
+        }
+
+        .setup {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            font-size: 102%;
+            height: 47px;
+            margin-left: -9px;
+            margin-top: 8px;
+            position: absolute;
+        }
+
+        p {
+            padding: 1em;
+        }
+
+        li {
+            border-bottom: 1px solid rgb(189, 189, 189);
+            border-left: 1px solid rgb(189, 189, 189);
+            padding: .5em;
+        }
+          #chat-table blockquote {
+                border: 1px dotted gray;
+                margin: 1em 5em;
+                padding: 1em 2em;
+            }
+
+            #chat-table blockquote hr {
+                border: 0;
+                border-top: 1px dotted #BBA9A9;
+                margin: 1em -2em;
+            }
+         .startExamButton {
+        display:block;
+    }
+    .HidestartExamButton{
+        display:none;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        @if (ViewBag.Visibility)
+        {
+            <table class="visible" style="display:block">
+                <tr>
+                    <td style="text-align: right;">
+                        <input type="text" id="conference-name" value="@(ViewBag.RoomName)" placeholder="Broadcast Name">
+                    </td>
+                    <td>
+                        <button id="start-conferencing">Start Test</button>
+                    </td>
+                </tr>
+            </table>
+        }
+
+        <table id="rooms-list" class="visible"></table>
+       
+        <label id="candName">@(ViewBag.CandName)</label>
+        @*<table class="visible">
+                <tr>
+                    <td style="text-align: center;">
+                        <h2>
+                            <strong>Private Broadcast</strong> ?? <a href="" target="_blank" title="Open this link in new tab. Then your broadcasting room will be private!"><code><strong id="unique-token">#123456789</strong></code></a>
+                        </h2>
+                    </td>
+                </tr>
+            </table>*@
+        <div id="participants"></div>
+     
+    </div>
+    <div class="col-md-12">
+        <span class="@ViewBag.stratExam">  <button class="btn btn-default" onclick="openWindow();">Start Test</button></span>
+    </div>
+
+    <script>
+    function openWindow() {
+        var params = [
+    'height=' + screen.height,
+    'width=' + screen.width,
+    'fullscreen=yes' // only works in IE, but here for completeness
+        ].join(',');
+        var browser = navigator.appName;
+        if (browser == "Microsoft Internet Explorer") {
+            window.opener = self;
+
+        }
+      window.open('@Url.Action("ObjectiveTestAdvanced", "DrivingTest")', 'null', params,
+            'toolbar=no', 'scrollbars=no', 'location=no', 'resizable =no');
+            window.moveTo(0, 0);
+        //window.resizeTo(screen.width, screen.height - 100);
+        self.close();
+
+    }
+    </script>
+    <script src="~/JS/firebase.js"> </script>
+    <script src="~/JS/RTCPeerConnection-v1.5.js"> </script>
+    <script src="~/JS/broadcast/broadcast.js"> </script>
+    <script src="~/JS/broadcast/broadcast-ui.js"> </script>
+    @*<script src="~/JS/chat/hangout.js"> </script>
+    <script src="~/JS/chat/hangout-ui.js"> </script>*@
+    @*<script src="~/JS/customBroadcastHangout/broadcast_hangout.js"> </script>
+    <script src="~/JS/customBroadcastHangout/broadcast_hangout_ui.js"> </script>*@
+</body>
+</html>

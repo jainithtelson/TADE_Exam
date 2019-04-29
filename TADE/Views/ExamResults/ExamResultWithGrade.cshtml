@@ -1,0 +1,42 @@
+﻿@model TADE.Models.DrivingTestResult
+
+@{
+    ViewBag.Title = "ExamResultWithGrade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align: center;">TADE EXAM RESULT</h1>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;</p>
+<table style="width:100%"><tbody><tr><td colspan="2"><h2>APPLICANT DETAILS</h2></td></tr><tr><td>1. FIRST NAME:</td><td>
+    @Html.DisplayFor(model => model.FirstName)
+    </td></tr><tr><td>2. MIDDLE NAME:</td><td>
+    @Html.DisplayFor(model => model.MiddleName)
+    </td></tr><tr><td>3. LAST NAME:</td><td>
+    @Html.DisplayFor(model => model.LastName)
+    </td></tr><tr><td>4. DATE OF BIRTH</td><td>
+    @Html.DisplayFor(model => model.DateOfBirth)
+    </td></tr><tr><td>5. DRIVING LICENCE No.</td><td>
+    @Html.DisplayFor(model => model.DrivingLicense)
+    </td></tr><tr><td>6. ADDRESS</td><td>
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Address))
+    </td></tr><tr><td colspan="2"><h2>EXAM DETAILS</h2></td></tr><tr><td>7. REGISTRATION No.</td><td>
+    @Html.DisplayFor(model => model.ExamId)
+    </td></tr><tr><td>8. IP ADDRESS OF COMPUTER TEST ATTENDED</td><td>
+    @Html.DisplayFor(model => model.IPAddress)
+    </td></tr><tr><td>9. EXAMINER ID</td><td>
+    &nbsp;
+    </td></tr><tr><td>10. TIME OF EXAM</td><td>
+    &nbsp;
+    </td></tr><tr><td>11. DURATION OF EXAM</td><td>
+    &nbsp;
+    </td></tr><tr><td>12. EXAM GRADE</td><td>
+    @Html.DisplayFor(model => model.Grade)
+    </td></tr><tr><td>13. EXAM RESULT VALID TILL</td><td>
+    &nbsp;
+    </td></tr><tr><td>14. COMMENTS</td><td>
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Explanation))
+    </td></tr></tbody></table>
+
+
+
+<input type="button" style="width: 185px !important;" value="Close this window" class="btn btn-default" onclick="window.close()" />

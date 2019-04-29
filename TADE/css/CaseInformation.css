@@ -1,0 +1,125 @@
+﻿@import url('http://getbootstrap.com/dist/css/bootstrap.css');
+.container
+{
+    /* Override  bootstrap.css to fit block in Deimos */
+    width: 1030px;
+    padding: 0px;
+}
+
+.bannerTable
+{
+    font-family: 'font-family: Arial,Helvetica,sans-serif;';
+    background-color: #FFFFFF;
+    font-weight: normal;
+    width: 100%;
+}
+.bannerTable > tbody > tr > td.Col1
+{
+    text-align: right;
+    background-color: #d7e6f7;
+    white-space: nowrap;
+    padding: 3px 5px 2px 5px;
+    border: 1px solid #FFFFFF;
+    font-size: 12px;
+}
+.bannerTable > tbody > tr > td.Col2
+{
+    background-color: #d7e6f7;
+    white-space: nowrap;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #FFFFFF;
+    font-weight: normal;
+    font-size: 12px;
+}
+.bannerTable > tbody > tr > td.Col2 > label
+{
+    font-weight: normal !important;
+    font-size: 12px;
+}
+.bannerTable > tbody > tr > td.Col2 > textarea
+{
+    width: 99%;
+    background-color: #d7e6f7;
+    border-width: 0;
+    color: Black;
+    font-size: 12px;
+}
+.popover
+{
+    width:305px;
+    max-width: 376px;
+    background-color: #d7e6f7;
+    margin: 0px;
+    padding: 5px;
+}
+.popover.bottom > .arrow
+{
+    color: #d7e6f7;
+    background-color: #d7e6f7;
+}
+.popover-title
+{
+    background-color: #d7e6f7;
+    margin: 0px;
+    padding: 0px;
+}
+.popover-content
+{
+    background-color: #d7e6f7;
+    margin: 0px;
+    padding: 0px;
+}
+.arrearsPopOverTable
+{
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    font-family: 'Gill Sans MT';
+    font-size: x-small;
+    color: #000000;
+    vertical-align: middle;
+    table-layout: auto;
+    border-collapse: collapse;
+    empty-cells: show;
+    width: 90%;
+}
+.arrearsPopOverTable > tbody > tr > td.heading
+{
+    border: 1px solid #6593CF;
+    text-align: center;
+    font-weight: bold;
+    background: url('../../Images/RootItemBkg.gif');
+    background-repeat: repeat-x;
+    font-size: medium;
+}
+.arrearsPopOverTable > tbody > tr > td > table.content
+{
+    font-family: 'Gill Sans MT';
+    font-size: 11px;
+    background-color: #FFFFFF;
+    font-weight: normal;
+    width: 100%;
+}
+.arrearsPopOverTable > tbody > tr > td > table.content > tbody > tr > td.subHeading
+{
+    text-align: center;
+    background-color: #d7e6f7;
+    white-space: nowrap;
+    padding: 3px 5px 2px 5px;
+}
+.arrearsPopOverTable > tbody > tr > td > table.content > tbody > tr > td.subContentTitle
+{
+    background-color: #d7e6f7;
+    white-space: nowrap;
+    padding: 2px 5px 2px 5px;
+    font-weight: normal;
+    font-size: 13px;
+}
+.arrearsPopOverTable > tbody > tr > td > table.content > tbody > tr > td.subContent
+{
+    text-align: right;
+    background-color: #d7e6f7;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 3px 5px 2px 5px;
+}
+

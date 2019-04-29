@@ -1,0 +1,23 @@
+﻿@model IEnumerable<TADE.Models.Testimonial>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Testimonials</h2>
+
+<p>
+    @Html.ActionLink("Add new Testimony", "Create")
+</p>
+<table class="table">
+   
+
+@foreach (var item in Model) {
+    <tr><td><table style="border:none !important;"><tr><td style="border:none !important;">@Html.DisplayFor(modelItem => item.Name)</td></tr>
+    <tr><td style="border:none !important;">@Html.DisplayFor(modelItem => item.Description)</td></tr></table></td></tr>
+    
+  
+}
+
+</table>

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "LatestNewsDetailController";
+}
+
+
+<div>
+    <h4>Latest News</h4>
+    <hr />
+    <table>
+        <tr><td style="font-size:32px;margin-bottom:10px;">{{LatestNews.Title}} &nbsp;<a ng-click="latestNewsClick(LatestNews.SourceLink)" href="" target="_blank">Read more</a></td></tr>
+        @*<tr><td colspan="2" style="font-size:20px;margin-bottom:25px;">News taken from orginal website on : {{LatestNews.DateAdded | date: 'dd/MM/yyyy'}}</td></tr>*@
+        </table>
+        @*@Html.DisplayNameFor(model => model.SourceLink)*@
+</div>
+<p>
+    <a href="/LatestNews/Index">Show all news</a>
+    @*@Html.ActionLink("Show all news", "Index","LatestNews")*@
+</p>
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.LatestNews = { NewsId: '', UserId: '', Title: '', NewsScreenshotPath: '', SourceLink: '', DateAdded :''};
+           $scope.NewsId = 0;
+           $scope.getLatestNewsDetail = function (NewsId) {
+               
+              var req = {
+                  method: 'POST', url: '/LatestNews/GetLatestNewsDetail',
+                  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                  data: { 'NewsId': NewsId }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.LatestNews = response.data;
+                       $scope.LatestNews.DateAdded = new Date(parseInt($scope.LatestNews.DateAdded.replace("/Date(", "").replace(")/", ""), 10));
+                       alert($scope.LatestNews.DateAdded);
+                   }, function (response) {
+
+                   });
+           }
+
+           $scope.latestNewsClick = function (sourceLink) {
+               window.location = sourceLink;
+           }
+          
+           $scope.NewsId = '@ViewBag.NewsId';
+          
+           $scope.getLatestNewsDetail($scope.NewsId);
+       }]);
+
+
+</script>

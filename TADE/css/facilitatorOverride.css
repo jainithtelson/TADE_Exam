@@ -1,0 +1,5 @@
+.table-striped>tbody>tr.disableRow
+ {   
+   background-color: #C0C0C0;
+ }
+

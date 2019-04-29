@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ngApp = "TADEApp";
+    ViewBag.ngController = "LatestNewsAllController";
+}
+
+
+<div>
+    <h4>Latest News</h4>
+    <hr />
+    <table>
+        <tr ng-repeat="n in LatestNews">
+            <td>
+                <table>
+                    <tr><td style="font-size:32px;margin-bottom:10px;">{{n.Title}} &nbsp; 
+                        <a ng-click="latestNewsClick(n.SourceLink)" href="" target="_blank">Read more</a>
+                        @*<span style="color:deepskyblue" ng-click="latestNewsClick(n.SourceLink)">Read more</span>*@
+                        </td></tr>
+                    @*<tr><td colspan="2" style="font-size:20px;margin-bottom:25px;">News taken from orginal website on : {{n.DateAdded | date: 'dd/MM/yyyy'}}</td></tr>*@
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    @*@Html.DisplayNameFor(model => model.SourceLink)*@
+</div>
+@*<p>
+
+        @Html.ActionLink("Show all news", "Index", "LatestNews")
+    </p>*@
+<script type="text/javascript">
+    "use strict";
+    var app = angular.module('@ViewBag.ngApp', ['ngSanitize']);
+
+    app.controller('@ViewBag.ngController', ['$scope', '$http',
+
+       function ($scope, $http) {
+           $scope.LatestNews = [];
+
+           $scope.getAllLatestNews = function () {
+
+               var req = {
+                   method: 'POST', url: '/LatestNews/GetAllLatestNews',
+                   headers: { 'Content-Type': 'application/json; charset=utf-8' }
+               }
+               $http(req).
+                   then(function (response) {
+
+                       $scope.LatestNews = response.data;
+                       $scope.LatestNews.DateAdded = new Date(parseInt($scope.LatestNews.DateAdded.replace("/Date(", "").replace(")/", ""), 10));
+
+                   }, function (response) {
+
+                   });
+           }
+
+           $scope.latestNewsClick = function (sourceLink) {
+               window.location = sourceLink;
+           }
+
+
+
+           $scope.getAllLatestNews();
+       }]);
+
+
+</script>
+
